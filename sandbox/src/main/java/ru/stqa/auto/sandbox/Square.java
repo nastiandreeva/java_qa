@@ -9,7 +9,7 @@ public class Square {
   };
 
   public double area(){
-    return this.l + this.l;
+    return this.l * this.l;
   }
 
 }
