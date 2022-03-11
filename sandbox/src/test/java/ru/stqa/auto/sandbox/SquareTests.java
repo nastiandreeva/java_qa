@@ -16,5 +16,4 @@ public class SquareTests {
     Rectangle r = new Rectangle(4, 6);
     Assert.assertEquals(r.area(), 24.0);
   }
-
 }
