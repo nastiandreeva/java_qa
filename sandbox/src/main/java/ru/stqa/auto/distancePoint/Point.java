@@ -1,4 +1,4 @@
-package ru.stqa.auto.homework;
+package ru.stqa.auto.distancePoint;
 
 public class Point {
 

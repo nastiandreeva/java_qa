@@ -1,6 +1,6 @@
 package ru.stqa.auto.sandbox;
 
-import ru.stqa.auto.homework.Point;
+import ru.stqa.auto.distancePoint.Point;
 
 public class MyFirstProgram {
 
