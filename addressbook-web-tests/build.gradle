@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+repositories {  //подключение места откуда будет тянутся библиотека
+    mavenCentral()
+}
+
+dependencies {  //библиотеки
+    implementation 'org.testng:testng:7.5'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+    implementation 'junit:junit:4.12'
+}
+
+test {
+    useTestNG()
+}
