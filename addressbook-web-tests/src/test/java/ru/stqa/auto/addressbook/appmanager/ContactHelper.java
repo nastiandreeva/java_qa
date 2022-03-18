@@ -34,7 +34,29 @@ public class ContactHelper extends HelperBase{
     wd.findElement(By.name("bmonth")).click();
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonthbirth());
     type("byear", contactData.getYearbirth());
+  }
 
+  public void selectContact(String id) {
+    click(By.id(id));
+  }
 
+  public void initContactModification() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {
+    click(By.name("update"));
+  }
+
+  public void getLinkContactModification() {
+    getLink("http://localhost/addressbook/edit.php?id=3");
+  }
+
+  public void goToPageContactModification() {
+    click(By.xpath("//form[@action='edit.php']"));
+  }
+
+  public void submitContactDelete() {
+    click(By.xpath("//input[@value='Delete']"));
   }
 }

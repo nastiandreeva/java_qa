@@ -22,6 +22,14 @@ public class HelperBase {
     wd.findElement(locator).click();
   }
 
+  protected void getLink(String locator) {
+    wd.get(String.valueOf(locator));
+  }
+
+  public void acceptDelete() {
+    wd.switchTo().alert().accept();
+  }
+
   public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
@@ -30,5 +38,4 @@ public class HelperBase {
       return false;
     }
   }
-
 }
