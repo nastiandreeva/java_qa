@@ -8,7 +8,7 @@ public class ContactModificationTests extends TestBase{
   @Test
   public void testContactModification() throws Exception {
     app.getNavigationHelper().goToHomePage();
-    app.getContactHelper().selectContact("5");
+    app.getContactHelper().selectContact();
     app.getContactHelper().initContactModification();
     app.getContactHelper().getLinkContactModification();
     app.getContactHelper().goToPageContactModification();

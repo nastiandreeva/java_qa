@@ -36,8 +36,8 @@ public class ContactHelper extends HelperBase{
     type("byear", contactData.getYearbirth());
   }
 
-  public void selectContact(String id) {
-    click(By.id(id));
+  public void selectContact() {
+    click(By.name("selected[]"));
   }
 
   public void initContactModification() {
