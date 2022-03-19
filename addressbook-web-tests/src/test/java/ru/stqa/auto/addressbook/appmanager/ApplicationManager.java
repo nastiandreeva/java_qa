@@ -4,20 +4,35 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.BrowserType;
 
 import java.time.Duration;
 
 public class ApplicationManager {
 
-  public WebDriver wd;
+  WebDriver wd;
 
   private SessionHelper sessionHelper;
   private ContactHelper contactHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;  //в этом классе находятся все вспомогательные действия
+  private String browser;
+
+  public ApplicationManager(String browser) {
+    this.browser = browser;
+  }
 
   public void init() {
-    System.setProperty("webdriver.chrome.driver", "D:\\chromedriver_win32\\chromedriver.exe");
+    if (browser == BrowserType.CHROME) {
+      wd = new ChromeDriver();
+    } else if (browser == BrowserType.FIREFOX) {
+      wd = new FirefoxDriver();
+    } else if (browser == BrowserType.IE) {
+      wd = new InternetExplorerDriver();
+    }
     wd = new ChromeDriver();
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     groupHelper = new GroupHelper(wd);
