@@ -8,10 +8,15 @@ dependencies {  //библиотеки
     implementation 'org.testng:testng:7.5'
     implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
     implementation 'junit:junit:4.12'
-
-
 }
 
 test {
     useTestNG()
+}
+
+tasks.withType(JavaCompile) { // для заполнение данными в тестах на русском
+    options.encoding = 'UTF-8'
+}
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
 }

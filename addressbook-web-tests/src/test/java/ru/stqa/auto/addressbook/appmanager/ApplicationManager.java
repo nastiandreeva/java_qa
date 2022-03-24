@@ -33,7 +33,7 @@ public class ApplicationManager {
     } else if (browser == BrowserType.IE) {
       wd = new InternetExplorerDriver();
     }
-    wd = new ChromeDriver();
+//    wd = new ChromeDriver();
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);

@@ -7,7 +7,7 @@ import ru.stqa.auto.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-  protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);  //создали делегирование вместо наследования
+  protected final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);  //создали делегирование вместо наследования
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
