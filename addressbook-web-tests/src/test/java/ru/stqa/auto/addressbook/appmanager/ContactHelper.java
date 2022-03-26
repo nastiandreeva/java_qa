@@ -1,8 +1,10 @@
 package ru.stqa.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.auto.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase{
@@ -19,7 +21,7 @@ public class ContactHelper extends HelperBase{
     click(By.name("submit"));
   }
 
-  public void fillNewContactForm(ContactData contactData) {
+  public void fillNewContactForm(ContactData contactData, boolean creation) {
     type("firstname", contactData.getName());
     type("middlename", contactData.getSurname());
     type("lastname", contactData.getPatronymic());
@@ -34,6 +36,12 @@ public class ContactHelper extends HelperBase{
     wd.findElement(By.name("bmonth")).click();
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonthbirth());
     type("byear", contactData.getYearbirth());
+
+    if (creation) { //условие на то, что если это страницы создания контакта то поле выбора группы есть, иначе если страница модификации, то выпадающего списка выбора группы не должно быть
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
 
   public void selectContact() {
