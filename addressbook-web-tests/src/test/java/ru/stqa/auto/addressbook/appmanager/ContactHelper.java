@@ -1,7 +1,6 @@
 package ru.stqa.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -21,7 +20,7 @@ public class ContactHelper extends HelperBase{
     click(By.name("submit"));
   }
 
-  public void fillNewContactForm(ContactData contactData, boolean creation) {
+  public void fillNewContactForm(ContactData contactData) {
     type("firstname", contactData.getName());
     type("middlename", contactData.getSurname());
     type("lastname", contactData.getPatronymic());
@@ -37,11 +36,11 @@ public class ContactHelper extends HelperBase{
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonthbirth());
     type("byear", contactData.getYearbirth());
 
-    if (creation) { //условие на то, что если это страницы создания контакта то поле выбора группы есть, иначе если страница модификации, то выпадающего списка выбора группы не должно быть
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }
+//    if (creation) { //условие на то, что если это страницы создания контакта то поле выбора группы есть, иначе если страница модификации, то выпадающего списка выбора группы не должно быть
+//      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+//    } else {
+//      Assert.assertFalse(isElementPresent(By.name("new_group")));
+//    }
   }
 
   public void selectContact() {
@@ -57,7 +56,7 @@ public class ContactHelper extends HelperBase{
   }
 
   public void getLinkContactModification() {
-    getLink("http://localhost/addressbook/edit.php?id=3");
+    getLink("http://localhost/addressbook/edit.php?id=46");
   }
 
   public void goToPageContactModification() {
@@ -66,5 +65,15 @@ public class ContactHelper extends HelperBase{
 
   public void submitContactDelete() {
     click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void createContact(ContactData contact) { //метод для создания контакта, нужен для предусловий при выполнении кейсов по удалению/изменению контакта
+    fillNewContactForm(contact);
+    submitNewContactCreation();
+    returnToContactPage();
+  }
+
+  public boolean isThereAGroup() { //проверка наличия элемента для дальнейшего изменения/удаления
+    return isElementPresent(By.name("selected[]"));
   }
 }
