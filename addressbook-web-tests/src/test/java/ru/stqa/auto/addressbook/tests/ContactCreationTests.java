@@ -2,7 +2,6 @@ package ru.stqa.auto.addressbook.tests;
 
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
-import ru.stqa.auto.addressbook.model.GroupData;
 
 public class ContactCreationTests extends TestBase {
 

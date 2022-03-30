@@ -55,9 +55,9 @@ public class ContactHelper extends HelperBase{
     click(By.name("update"));
   }
 
-  public void getLinkContactModification() {
-    getLink("http://localhost/addressbook/edit.php?id=46");
-  }
+//  public void getLinkContactModification() {
+//    getLink("http://localhost/addressbook/edit.php?id=46");
+//  }
 
   public void goToPageContactModification() {
     click(By.xpath("//form[@action='edit.php']"));
@@ -73,7 +73,7 @@ public class ContactHelper extends HelperBase{
     returnToContactPage();
   }
 
-  public boolean isThereAGroup() { //проверка наличия элемента для дальнейшего изменения/удаления
+  public boolean isThereAContact() { //проверка наличия элемента для дальнейшего изменения/удаления
     return isElementPresent(By.name("selected[]"));
   }
 }
