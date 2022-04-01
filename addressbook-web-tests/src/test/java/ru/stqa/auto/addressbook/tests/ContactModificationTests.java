@@ -1,5 +1,6 @@
 package ru.stqa.auto.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
 
@@ -20,5 +21,6 @@ public class ContactModificationTests extends TestBase{
             "город НУр", "77-66-33", "2-35-05", "ao@bk.ru", "19", "February", "1995"));
     app.getContactHelper().submitContactModification();
     app.getContactHelper().returnToContactPage();
+
   }
 }
