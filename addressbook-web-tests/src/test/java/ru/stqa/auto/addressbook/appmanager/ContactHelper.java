@@ -2,9 +2,14 @@ package ru.stqa.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.auto.addressbook.model.ContactData;
+import ru.stqa.auto.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
 
@@ -75,5 +80,20 @@ public class ContactHelper extends HelperBase{
 
   public boolean isThereAContact() { //проверка наличия элемента для дальнейшего изменения/удаления
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = wd.findElements(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]"));  //получаем список элементов в лист elements через xpath
+    for (WebElement element : elements) {                                                         //проходимся по списку elements
+      String nameContact = element.getText();                                                     //получаем текст элемента списка в переменную
+      String surnameContact = element.getText();                                                  //получаем текст элемента списка в переменную
+      ContactData contact = new ContactData(nameContact, surnameContact, null,
+              null, null, null, null, null,
+              null,null, null, null);                             //создаем объект типа GroupData
+      contacts.add(contact);                                                                      //добавляем созданный объект в список
+
+    }
+    return contacts;
   }
 }

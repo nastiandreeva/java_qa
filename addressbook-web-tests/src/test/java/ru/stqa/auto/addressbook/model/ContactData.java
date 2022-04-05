@@ -1,5 +1,7 @@
 package ru.stqa.auto.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
   private final String name;
   private final String surname;
@@ -79,7 +81,38 @@ public class ContactData {
     return yearbirth;
   }
 
-//  public String getGroup() {
-//    return group;
-//  }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return Objects.equals(name, that.name) && Objects.equals(surname, that.surname)
+            && Objects.equals(patronymic, that.patronymic) && Objects.equals(address, that.address)
+            && Objects.equals(hometel, that.hometel) && Objects.equals(worktel, that.worktel)
+            && Objects.equals(email, that.email) && Objects.equals(datebirth, that.datebirth)
+            && Objects.equals(monthbirth, that.monthbirth) && Objects.equals(yearbirth, that.yearbirth);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, surname, patronymic, address, hometel, worktel, email, datebirth, monthbirth, yearbirth);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "name='" + name + '\'' +
+            ", surname='" + surname + '\'' +
+            ", patronymic='" + patronymic + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", hometel='" + hometel + '\'' +
+            ", worktel='" + worktel + '\'' +
+            ", email='" + email + '\'' +
+            ", datebirth='" + datebirth + '\'' +
+            ", monthbirth='" + monthbirth + '\'' +
+            ", yearbirth='" + yearbirth + '\'' +
+            '}';
+  }
 }
