@@ -65,12 +65,12 @@ public class GroupHelper extends HelperBase{
 
   public List<GroupData> getGroupList() {
     List<GroupData> groups = new ArrayList<GroupData>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));          //получаем список элементов в лист elements
-    for (WebElement element : elements) {                                               //проходимся по списку elements
-      String nameGroup = element.getText();                                             //получаем текст элемента списка в переменную
-      String id = element.findElement(By.tagName("input")).getAttribute("value"); //получаем хначение из тегов на странице
-      GroupData group = new GroupData(id, nameGroup, null, null);          //создаем объект типа GroupData
-      groups.add(group);                                                                //добавляем созданный объект в список
+    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));                          //получаем список элементов в лист elements
+    for (WebElement element : elements) {                                                               //проходимся по списку elements
+      String nameGroup = element.getText();                                                             //получаем текст элемента списка в переменную
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //получаем значение из тегов на странице
+      GroupData group = new GroupData(id, nameGroup, null, null);                         //создаем объект типа GroupData
+      groups.add(group);                                                                               //добавляем созданный объект в список
 
     }
     return groups;
