@@ -3,6 +3,7 @@ package ru.stqa.auto.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
+  private int id;
   private final String name;
   private final String surname;
   private final String patronymic;
@@ -15,9 +16,41 @@ public class ContactData {
   private final String datebirth;
   private final String monthbirth;
   private final String yearbirth;
-//  private final String group;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, surname);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", surname='" + surname + '\'' +
+            ", patronymic='" + patronymic + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", hometel='" + hometel + '\'' +
+            ", worktel='" + worktel + '\'' +
+            ", email='" + email + '\'' +
+            ", datebirth='" + datebirth + '\'' +
+            ", monthbirth='" + monthbirth + '\'' +
+            ", yearbirth='" + yearbirth + '\'' +
+            '}';
+  }
 
   public ContactData(String name, String surname, String patronymic, String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
+    this.id = 0;
     this.name = name;
     this.surname = surname;
     this.patronymic = patronymic;
@@ -30,7 +63,30 @@ public class ContactData {
     this.datebirth = datebirth;
     this.monthbirth = monthbirth;
     this.yearbirth = yearbirth;
-//    this.group = group;
+  }
+
+  public ContactData(int id, String name, String surname, String patronymic, String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
+    this.id = id;
+    this.name = name;
+    this.surname = surname;
+    this.patronymic = patronymic;
+    this.nickname = nickname;
+    this.company = company;
+    this.address = address;
+    this.hometel = hometel;
+    this.worktel = worktel;
+    this.email = email;
+    this.datebirth = datebirth;
+    this.monthbirth = monthbirth;
+    this.yearbirth = yearbirth;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -81,38 +137,4 @@ public class ContactData {
     return yearbirth;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return Objects.equals(name, that.name) && Objects.equals(surname, that.surname)
-            && Objects.equals(patronymic, that.patronymic) && Objects.equals(address, that.address)
-            && Objects.equals(hometel, that.hometel) && Objects.equals(worktel, that.worktel)
-            && Objects.equals(email, that.email) && Objects.equals(datebirth, that.datebirth)
-            && Objects.equals(monthbirth, that.monthbirth) && Objects.equals(yearbirth, that.yearbirth);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, surname, patronymic, address, hometel, worktel, email, datebirth, monthbirth, yearbirth);
-  }
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "name='" + name + '\'' +
-            ", surname='" + surname + '\'' +
-            ", patronymic='" + patronymic + '\'' +
-            ", nickname='" + nickname + '\'' +
-            ", company='" + company + '\'' +
-            ", address='" + address + '\'' +
-            ", hometel='" + hometel + '\'' +
-            ", worktel='" + worktel + '\'' +
-            ", email='" + email + '\'' +
-            ", datebirth='" + datebirth + '\'' +
-            ", monthbirth='" + monthbirth + '\'' +
-            ", yearbirth='" + yearbirth + '\'' +
-            '}';
-  }
 }
