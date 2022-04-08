@@ -27,8 +27,8 @@ public class ContactHelper extends HelperBase{
 
   public void fillNewContactForm(ContactData contactData) {
     type("firstname", contactData.getName());
-    type("middlename", contactData.getSurname());
-    type("lastname", contactData.getPatronymic());
+    type("middlename", contactData.getPatronymic());
+    type("lastname", contactData.getSurname());
     type("nickname", contactData.getNickname());
     type("company", contactData.getCompany());
     type("address", contactData.getAddress());
@@ -87,16 +87,13 @@ public class ContactHelper extends HelperBase{
     List<WebElement> elements = wd.findElements(By.xpath("//*[@id='maintable']/tbody/tr[@name = 'entry']"));            //получаем список элементов в лист elements через xpath
     for (WebElement element : elements) {                                                                               //проходимся по списку elements
       List<WebElement> cells = element.findElements(By.tagName("td"));
-      for (WebElement cell : cells){
-        int id = Integer.parseInt(String.valueOf(cell.findElement(By.tagName("input")).getAttribute("value")));  //получаем значение из тегов на странице
-        String nameContact = cell.getText();                                                                            //получаем текст элемента списка в переменную
-        String surnameContact = cell.getText();                                                                         //получаем текст элемента списка в переменную
-        ContactData contact = new ContactData(id, nameContact, surnameContact, null,
-                null, null, null, null, null,
+      int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));  //получаем значение из тегов на странице
+      String surnameContact = cells.get(1).getText();                                                                   //получаем текст элемента списка в переменную
+      String nameContact = cells.get(2).getText();
+      ContactData contact = new ContactData(id, nameContact, surnameContact,  null,
+              null, null, null, null, null,
                 null,null, null, null);                                                  //создаем объект типа ContactData
-        contacts.add(contact);                                                                                          //добавляем созданный объект в список
-      }
-
+      contacts.add(contact);                                                                                          //добавляем созданный объект в список
     }
     return contacts;
   }
