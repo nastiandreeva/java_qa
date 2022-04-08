@@ -15,7 +15,7 @@ public class ContactDeletionTests extends TestBase{
     app.getNavigationHelper().goToHomePage();
     if (! app.getContactHelper().isThereAContact()) { //предусловия на то, если нет контакта что бы выделить для удаления, то создать
       app.getNavigationHelper().goToNewContactPage();
-      app.getContactHelper().createContact(new ContactData("Александр", "Николаев", "Дмитриевич", "Стом", "ООО \"СК\"",
+      app.getContactHelper().createContact(new ContactData("Александр", "Дмитриевич", "Николаев", "Стом", "ООО \"СК\"",
               "город Омск", "77-44-33", "2-35-12", "neil@bk.ru", "5", "May", "1995"));
     }
     List<ContactData> before = app.getContactHelper().getContactList(); //предусловия "получить список контактов"
@@ -27,9 +27,6 @@ public class ContactDeletionTests extends TestBase{
     Assert.assertEquals(after.size(), before.size() - 1 );
 
     before.remove(before.size() - 1);
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 }

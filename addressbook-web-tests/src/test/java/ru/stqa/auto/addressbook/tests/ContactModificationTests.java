@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestBase{
     app.getContactHelper().selectContact();
     app.getContactHelper().initContactModification();
     app.getContactHelper().goToPageContactModification();
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Ирина", "Павловна", "Миллер", "Ortho", "ООО \"SH\"",
+    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Ирина", "Миллер", "Павловна", "Ortho", "ООО \"SH\"",
             "город НУр", "77-66-33", "2-35-05", "ao@bk.ru", "19", "February", "1995");
     app.getContactHelper().fillNewContactForm(contact);
     app.getContactHelper().submitContactModification();

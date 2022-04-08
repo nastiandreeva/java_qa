@@ -20,8 +20,8 @@ public class ContactData {
   public ContactData(String name, String surname, String patronymic, String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
     this.id = Integer.MAX_VALUE;
     this.name = name;
-    this.patronymic = patronymic;
     this.surname = surname;
+    this.patronymic = patronymic;
     this.nickname = nickname;
     this.company = company;
     this.address = address;
@@ -36,8 +36,8 @@ public class ContactData {
   public ContactData(int id, String name, String surname, String patronymic,  String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
     this.id = id;
     this.name = name;
-    this.patronymic = patronymic;
     this.surname = surname;
+    this.patronymic = patronymic;
     this.nickname = nickname;
     this.company = company;
     this.address = address;
