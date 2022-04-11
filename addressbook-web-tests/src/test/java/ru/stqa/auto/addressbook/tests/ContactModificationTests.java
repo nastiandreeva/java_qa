@@ -1,41 +1,47 @@
 package ru.stqa.auto.addressbook.tests;
 
-import org.testng.Assert;
+import org.junit.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
-import ru.stqa.auto.addressbook.model.GroupData;
+import ru.stqa.auto.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase{
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().goToHomePage();
+    if (! app.contact().isThereAContact()) { //предусловия на то, если нет контакта что бы выделить для удаления, то создать
+    app.goTo().goToNewContactPage();
+    app.contact().create(new ContactData().withName("Анастасия").withSurname("Николаева").withPatronymic("Олеговна")
+            .withNickname("НастяКуа").withCompany("ООО \"Рога и копыта\"").withAddress("город Новый Уренгой")
+            .withWorktel("55-55-33").withHometel("2-35-12").withEmail("naastya@bk.ru").withDatebirth("19")
+            .withMonthbirth("February").withYearbirth("1992"));
+    }
+  }
+
   @Test
   public void testContactModification() throws Exception {
-    app.getNavigationHelper().goToHomePage();
-    if (! app.getContactHelper().isThereAContact()) { //предусловия на то, если нет контакта что бы выделить для удаления, то создать
-      app.getNavigationHelper().goToNewContactPage();
-      app.getContactHelper().createContact(new ContactData("Александр", "Николаев", "Дмитриевич", "Стом", "ООО \"СК\"",
-              "город Омск", "77-44-33", "2-35-12", "neil@bk.ru", "5", "May", "1995"));
-    }
-    List<ContactData> before = app.getContactHelper().getContactList(); //предусловия "получить список контактов"
-    app.getContactHelper().selectContact();
-    app.getContactHelper().initContactModification();
-    app.getContactHelper().goToPageContactModification();
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Ирина", "Миллер", "Павловна", "Ortho", "ООО \"SH\"",
-            "город НУр", "77-66-33", "2-35-05", "ao@bk.ru", "19", "February", "1995");
-    app.getContactHelper().fillNewContactForm(contact);
-    app.getContactHelper().submitContactModification();
-    app.getContactHelper().returnToContactPage();
-    List<ContactData> after = app.getContactHelper().getContactList(); //постусловия "получить список контактов" для сравнение со списком из предусловия
+    Contacts before = app.contact().all(); //предусловия "получить список контактов"
+    ContactData modifiedContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withName("Ирина").withSurname("Миллер")
+            .withPatronymic("Павловна").withNickname("НастяКуа").withCompany("ООО Жэмс")
+            .withAddress("город Хилок").withWorktel("55-22-44").withHometel("1-35-11").withEmail("ir@bk.ru")
+            .withDatebirth("1").withMonthbirth("June").withYearbirth("1996");
+    app.contact().modify(contact);
+    Contacts after = app.contact().all(); //постусловия "получить список контактов" для сравнение со списком из предусловия
     Assert.assertEquals(after.size(), before.size());
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 
-    before.remove(before.size() - 1 );                                        // удаляем контакт
-    before.add(contact);
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));  //сортированное множество, все одинаковые имена схлопываются
+//    before.remove(before.size() - 1 );                                        // удаляем контакт
+//    before.add(contact);
+//    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+//    before.sort(byId);
+//    after.sort(byId);
+//    assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));  //сортированное множество, все одинаковые имена схлопываются
   }
+
 }

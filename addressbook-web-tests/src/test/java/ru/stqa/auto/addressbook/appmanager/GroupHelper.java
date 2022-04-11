@@ -112,7 +112,6 @@ public class GroupHelper extends HelperBase{
       String nameGroup = element.getText();                                                             //получаем текст элемента списка в переменную
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));  //получаем значение из тегов на странице
       groups.add(new GroupData().withId(id).withName(nameGroup));                                       //добавляем созданный объект в список
-
     }
     return groups;
   }

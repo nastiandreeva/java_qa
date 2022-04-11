@@ -1,31 +1,32 @@
 package ru.stqa.auto.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
-import ru.stqa.auto.addressbook.model.GroupData;
+import ru.stqa.auto.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
   @Test
   public void testAddNewContact() throws Exception {
-    List<ContactData> before = app.getContactHelper().getContactList(); //объявление переменной типа лист
-    app.getNavigationHelper().goToNewContactPage();
-    ContactData contact = new ContactData("Анастасия",  "Николаева","Олеговна", "НастяКуа", "ООО \"Рога и копыта\"",
-            "город Новый Уренгой", "55-55-33", "2-35-12", "naastya@bk.ru", "19", "February", "1992");
-    app.getContactHelper().createContact(contact);
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size() + 1 );
+    app.goTo().goToNewContactPage();
+    Contacts before = app.contact().all(); //объявление переменной типа лист
+    ContactData contact = new ContactData().withName("Анастасия").withSurname("Николаева").withPatronymic("Олеговна")
+            .withNickname("НастяКуа").withCompany("ООО \"Рога и копыта\"").withAddress("город Новый Уренгой")
+            .withWorktel("55-55-33").withHometel("2-35-12").withEmail("naastya@bk.ru").withDatebirth("19")
+            .withMonthbirth("February").withYearbirth("1992");
+    app.contact().create(contact);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size() + 1 ));
+    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
-    before.add(contact);
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+//    before.add(contact);
+//    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+//    before.sort(byId);
+//    after.sort(byId);
+//    assertEquals(before, after);
   }
 
 }

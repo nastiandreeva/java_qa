@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.auto.addressbook.model.ContactData;
+import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -52,6 +53,10 @@ public class ContactHelper extends HelperBase{
     click(By.name("selected[]"));
   }
 
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "'")).click();
+  }
+
   public void initContactModification() {
     click(By.xpath("//img[@alt='Edit']"));
   }
@@ -59,10 +64,6 @@ public class ContactHelper extends HelperBase{
   public void submitContactModification() {
     click(By.name("update"));
   }
-
-//  public void getLinkContactModification() {
-//    getLink("http://localhost/addressbook/edit.php?id=46");
-//  }
 
   public void goToPageContactModification() {
     click(By.xpath("//form[@action='edit.php']"));
@@ -72,9 +73,26 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void createContact(ContactData contact) { //метод для создания контакта, нужен для предусловий при выполнении кейсов по удалению/изменению контакта
+  public void create(ContactData contact) { //метод для создания контакта, нужен для предусловий при выполнении кейсов по удалению/изменению контакта
     fillNewContactForm(contact);
     submitNewContactCreation();
+    returnToContactPage();
+  }
+
+  public void delete(ContactData contact) {
+    selectContactById(contact.getId());
+    submitContactDelete();
+    acceptDelete();
+//    returnToContactPage();
+//    goToHomePage();
+  }
+
+  public void modify(ContactData contact) {
+    selectContactById(contact.getId());
+    initContactModification();
+    goToPageContactModification();
+    fillNewContactForm(contact);
+    submitContactModification();
     returnToContactPage();
   }
 
@@ -82,18 +100,15 @@ public class ContactHelper extends HelperBase{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public List<ContactData> getContactList() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath("//*[@id='maintable']/tbody/tr[@name = 'entry']"));            //получаем список элементов в лист elements через xpath
-    for (WebElement element : elements) {                                                                               //проходимся по списку elements
+  public Contacts all() {
+    Contacts contacts = new Contacts();
+    List<WebElement> elements = wd.findElements(By.xpath("//*[@id='maintable']/tbody/tr[@name = 'entry']")); //получаем список элементов в лист elements через xpath
+    for (WebElement element : elements) {                                                                    //проходимся по списку elements
       List<WebElement> cells = element.findElements(By.tagName("td"));
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));  //получаем значение из тегов на странице
-      String surnameContact = cells.get(1).getText();                                                                   //получаем текст элемента списка в переменную
+      String surnameContact = cells.get(1).getText();                                                        //получаем текст элемента списка в переменную
       String nameContact = cells.get(2).getText();
-      ContactData contact = new ContactData(id, nameContact, surnameContact,  null,
-              null, null, null, null, null,
-                null,null, null, null);                                                  //создаем объект типа ContactData
-      contacts.add(contact);                                                                                          //добавляем созданный объект в список
+      contacts.add(new ContactData().withId(id).withName(nameContact).withSurname(surnameContact));          //создаем объект типа ContactData
     }
     return contacts;
   }

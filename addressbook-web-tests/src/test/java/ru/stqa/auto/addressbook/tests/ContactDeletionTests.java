@@ -1,32 +1,39 @@
 package ru.stqa.auto.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
-import ru.stqa.auto.addressbook.model.GroupData;
+import ru.stqa.auto.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class ContactDeletionTests extends TestBase{
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().goToHomePage();
+    if (! app.contact().isThereAContact()) { //предусловия на то, если нет контакта что бы выделить для удаления, то создать
+      app.goTo().goToNewContactPage();
+      app.contact().create(new ContactData().withName("Александр").withSurname("Николаев").withPatronymic("Дмитриевич")
+              .withNickname("Алекс").withCompany("СК Шустов").withAddress("город Омск")
+              .withWorktel("55-55-33").withHometel("2-35-12").withEmail("ortho@bk.ru").withDatebirth("5")
+              .withMonthbirth("May").withYearbirth("1995"));
+    }
+  }
+
   @Test
   public void testContactDeletion() {
-    app.getNavigationHelper().goToHomePage();
-    if (! app.getContactHelper().isThereAContact()) { //предусловия на то, если нет контакта что бы выделить для удаления, то создать
-      app.getNavigationHelper().goToNewContactPage();
-      app.getContactHelper().createContact(new ContactData("Александр", "Дмитриевич", "Николаев", "Стом", "ООО \"СК\"",
-              "город Омск", "77-44-33", "2-35-12", "neil@bk.ru", "5", "May", "1995"));
-    }
-    List<ContactData> before = app.getContactHelper().getContactList(); //предусловия "получить список контактов"
-    app.getContactHelper().selectContact();
-    app.getContactHelper().submitContactDelete();
-    app.getContactHelper().acceptDelete();
-    app.getNavigationHelper().goToHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList(); //постусловия "получить список контактов" для сравнение со списком из предусловия
-    Assert.assertEquals(after.size(), before.size() - 1 );
-
-    before.remove(before.size() - 1);
-    Assert.assertEquals(before, after);
+    Contacts before = app.contact().all(); //предусловия "получить список контактов"
+    ContactData deletedContact = before.iterator().next();
+    app.contact().delete(deletedContact);
+    Contacts after = app.contact().all(); //постусловия "получить список контактов" для сравнение со списком из предусловия
+    assertEquals(after.size(), before.size() - 1);
+    assertThat(after, equalTo(before.without(deletedContact)));
   }
+
 }

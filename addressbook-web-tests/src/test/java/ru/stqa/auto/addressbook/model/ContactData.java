@@ -3,58 +3,22 @@ package ru.stqa.auto.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String name;
-  private final String surname;
-  private final String patronymic;
-  private final String nickname;
-  private final String company;
-  private final String address;
-  private final String hometel;
-  private final String worktel;
-  private final String email;
-  private final String datebirth;
-  private final String monthbirth;
-  private final String yearbirth;
-
-  public ContactData(String name, String surname, String patronymic, String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
-    this.id = Integer.MAX_VALUE;
-    this.name = name;
-    this.surname = surname;
-    this.patronymic = patronymic;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.hometel = hometel;
-    this.worktel = worktel;
-    this.email = email;
-    this.datebirth = datebirth;
-    this.monthbirth = monthbirth;
-    this.yearbirth = yearbirth;
-  }
-
-  public ContactData(int id, String name, String surname, String patronymic,  String nickname, String company, String address, String hometel, String worktel, String email, String datebirth, String monthbirth, String yearbirth) {
-    this.id = id;
-    this.name = name;
-    this.surname = surname;
-    this.patronymic = patronymic;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.hometel = hometel;
-    this.worktel = worktel;
-    this.email = email;
-    this.datebirth = datebirth;
-    this.monthbirth = monthbirth;
-    this.yearbirth = yearbirth;
-  }
+  private int id = Integer.MAX_VALUE;;
+  private String name;
+  private String surname;
+  private String patronymic;
+  private String nickname;
+  private String company;
+  private String address;
+  private String hometel;
+  private String worktel;
+  private String email;
+  private String datebirth;
+  private String monthbirth;
+  private String yearbirth;
 
   public int getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -103,6 +67,71 @@ public class ContactData {
 
   public String getYearbirth() {
     return yearbirth;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public ContactData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public ContactData withSurname(String surname) {
+    this.surname = surname;
+    return this;
+  }
+
+  public ContactData withPatronymic(String patronymic) {
+    this.patronymic = patronymic;
+    return this;
+  }
+
+  public ContactData withNickname(String nickname) {
+    this.nickname = nickname;
+    return this;
+  }
+
+  public ContactData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withHometel(String hometel) {
+    this.hometel = hometel;
+    return this;
+  }
+
+  public ContactData withWorktel(String worktel) {
+    this.worktel = worktel;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withDatebirth(String datebirth) {
+    this.datebirth = datebirth;
+    return this;
+  }
+
+  public ContactData withMonthbirth(String monthbirth) {
+    this.monthbirth = monthbirth;
+    return this;
+  }
+
+  public ContactData withYearbirth(String yearbirth) {
+    this.yearbirth = yearbirth;
+    return this;
   }
 
   @Override
