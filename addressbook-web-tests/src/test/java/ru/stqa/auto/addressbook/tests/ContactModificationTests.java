@@ -8,6 +8,7 @@ import ru.stqa.auto.addressbook.model.Contacts;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase{
 
@@ -32,8 +33,8 @@ public class ContactModificationTests extends TestBase{
             .withAddress("город Хилок").withWorktel("55-22-44").withHometel("1-35-11").withEmail("ir@bk.ru")
             .withDatebirth("1").withMonthbirth("June").withYearbirth("1996");
     app.contact().modify(contact);
+    assertEquals(app.contact().count(), before.size());
     Contacts after = app.contact().all(); //постусловия "получить список контактов" для сравнение со списком из предусловия
-    Assert.assertEquals(after.size(), before.size());
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 
 //    before.remove(before.size() - 1 );                                        // удаляем контакт

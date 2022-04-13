@@ -1,16 +1,16 @@
 package ru.stqa.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
-import ru.stqa.auto.addressbook.model.GroupData;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.String.format;
 
 public class ContactHelper extends HelperBase{
 
@@ -19,7 +19,7 @@ public class ContactHelper extends HelperBase{
   }
 
   public void returnToContactPage() {
-    click(By.linkText("home page"));
+    click(By.linkText("home"));
   }
 
   public void submitNewContactCreation() {
@@ -54,11 +54,13 @@ public class ContactHelper extends HelperBase{
   }
 
   public void selectContactById(int id) {
-    wd.findElement(By.cssSelector("input[value='" + id + "'")).click();
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void initContactModification(int id) {
+//    click(By.xpath("//img[@alt='Edit']"));
+    wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
+//    click(By.xpath("//*[@id='maintable']/tbody//a[@href='edit.php?id='" + id + "']"));
   }
 
   public void submitContactModification() {
@@ -71,6 +73,7 @@ public class ContactHelper extends HelperBase{
 
   public void submitContactDelete() {
     click(By.xpath("//input[@value='Delete']"));
+    acceptDelete();
   }
 
   public void create(ContactData contact) { //метод для создания контакта, нужен для предусловий при выполнении кейсов по удалению/изменению контакта
@@ -82,14 +85,12 @@ public class ContactHelper extends HelperBase{
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     submitContactDelete();
-    acceptDelete();
-//    returnToContactPage();
-//    goToHomePage();
+    returnToContactPage();
   }
 
   public void modify(ContactData contact) {
     selectContactById(contact.getId());
-    initContactModification();
+    initContactModification(contact.getId());
     goToPageContactModification();
     fillNewContactForm(contact);
     submitContactModification();
@@ -98,6 +99,10 @@ public class ContactHelper extends HelperBase{
 
   public boolean isThereAContact() { //проверка наличия элемента для дальнейшего изменения/удаления
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
   }
 
   public Contacts all() {
