@@ -59,6 +59,7 @@ public class GroupHelper extends HelperBase{
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
+    groupCache = null;
     returnToGroupPage();
   }
 
@@ -67,6 +68,7 @@ public class GroupHelper extends HelperBase{
     initGroupModification();
     fillGroupForm(group);
     submitGroupModification();
+    groupCache = null;
     returnToGroupPage();
   }
 
@@ -79,6 +81,7 @@ public class GroupHelper extends HelperBase{
   public void delete(GroupData group) {
     selectGroupById(group.getId());
     deleteSelectedGroups();
+    groupCache = null;
     returnToGroupPage();
   }
 
@@ -86,9 +89,11 @@ public class GroupHelper extends HelperBase{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getGroupCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
+
+  private Groups groupCache = null; // создаем кэш группы, что бы не делать это каждый раз
 
   /* метод который возвращает список */
   public List<GroupData> list() {
@@ -106,13 +111,16 @@ public class GroupHelper extends HelperBase{
 
   /* метод который возвращает готовое множество */
   public Groups all() {
-    Groups groups = new Groups();
+    if (groupCache != null) {
+      return new Groups(groupCache);
+    }
+    groupCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));                          //получаем список элементов в лист elements
     for (WebElement element : elements) {                                                               //проходимся по списку elements
       String nameGroup = element.getText();                                                             //получаем текст элемента списка в переменную
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));  //получаем значение из тегов на странице
-      groups.add(new GroupData().withId(id).withName(nameGroup));                                       //добавляем созданный объект в список
+      groupCache.add(new GroupData().withId(id).withName(nameGroup));                                       //добавляем созданный объект в список
     }
-    return groups;
+    return new Groups(groupCache);
   }
 }

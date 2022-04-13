@@ -15,7 +15,7 @@ public class ContactCreationTests extends TestBase {
     Contacts before = app.contact().all(); //объявление переменной типа лист
     ContactData contact = new ContactData().withName("Анастасия").withSurname("Николаева").withPatronymic("Олеговна")
             .withNickname("НастяКуа").withCompany("ООО \"Рога и копыта\"").withAddress("город Новый Уренгой")
-            .withWorktel("55-55-33").withHometel("2-35-12").withEmail("naastya@bk.ru").withDatebirth("19")
+            .withWorkTel("55-55-33").withMobileTel("+7(908)3180707").withHometel("2-35-12").withEmail1("naastya@bk.ru").withDatebirth("19")
             .withMonthbirth("February").withYearbirth("1992");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size() + 1 ));

@@ -1,8 +1,5 @@
 package ru.stqa.auto.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
@@ -21,7 +18,7 @@ public class ContactDeletionTests extends TestBase{
       app.goTo().goToNewContactPage();
       app.contact().create(new ContactData().withName("Александр").withSurname("Николаев").withPatronymic("Дмитриевич")
               .withNickname("Алекс").withCompany("СК Шустов").withAddress("город Омск")
-              .withWorktel("55-55-33").withHometel("2-35-12").withEmail("ortho@bk.ru").withDatebirth("5")
+              .withWorkTel("55-55-33").withHometel("2-35-12").withEmail1("ortho@bk.ru").withDatebirth("5")
               .withMonthbirth("May").withYearbirth("1995"));
     }
   }
