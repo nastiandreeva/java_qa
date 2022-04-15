@@ -11,6 +11,7 @@ public class ContactData {
   private String company;
   private String address;
   private String homeTel;
+  private String homeTel2;
   private String mobileTel;
   private String workTel;
   private String allPhones;
@@ -52,6 +53,10 @@ public class ContactData {
 
   public String getHomeTel() {
     return homeTel;
+  }
+
+  public String getHomeTel2() {
+    return homeTel2;
   }
 
   public String getMobileTel() {
@@ -129,8 +134,13 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withHometel(String hometel) {
+  public ContactData withHomeTel(String hometel) {
     this.homeTel = hometel;
+    return this;
+  }
+
+  public ContactData withHomeTel2(String homeTel2) {
+    this.homeTel2 = homeTel2;
     return this;
   }
 
@@ -188,12 +198,12 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(address, that.address) && Objects.equals(homeTel, that.homeTel) && Objects.equals(mobileTel, that.mobileTel) && Objects.equals(workTel, that.workTel) && Objects.equals(allPhones, that.allPhones) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3);
+    return id == that.id && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(address, that.address) && Objects.equals(homeTel, that.homeTel) && Objects.equals(homeTel2, that.homeTel2) && Objects.equals(mobileTel, that.mobileTel) && Objects.equals(workTel, that.workTel) && Objects.equals(allPhones, that.allPhones) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(allEmails, that.allEmails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, surname, address, homeTel, mobileTel, workTel, allPhones, email1, email2, email3);
+    return Objects.hash(id, name, surname, address, homeTel, homeTel2, mobileTel, workTel, allPhones, email1, email2, email3, allEmails);
   }
 
   @Override
