@@ -15,7 +15,7 @@ public class ContactCreationTests extends TestBase {
   public void testAddNewContact() throws Exception {
     Contacts before = app.contact().all();
     app.goTo().goToNewContactPage();
-    File photo = new File("src/test/java/resources/photo.jpeg");
+    File photo = new File("src/test/java/resources/contacts/photo.jpeg");
     ContactData contact = new ContactData().withName("Анастасия").withSurname("Николаева")
             .withPhoto(photo).withAddress("город Новый Уренгой")
             .withWorkTel("55-55-33").withMobileTel("+7(908)3180707").withHomeTel("2-35-12").withHomeTel2("8-55-55")
@@ -30,7 +30,7 @@ public class ContactCreationTests extends TestBase {
   public void testCurrentDir() {
     File currentDir = new File(".");
     System.out.println(currentDir.getAbsolutePath());
-    File photo = new File("src/test/resources/.photo.jpg");
+    File photo = new File("src/test/resources/contacts/.photo.jpg");
     System.out.println(photo.getAbsolutePath());
     System.out.println(photo.exists());                               // проверка что файл существует
     }

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Имя 0",
+    "surname": "Фамилия 0",
+    "address": "Город 0",
+    "homeTel": "58-88-80",
+    "homeTel2": "57-77-70",
+    "email1": "testmail1-0@bk.ru",
+    "email2": "testmail2-0@bk.ru"
+  },
+  {
+    "name": "Имя 1",
+    "surname": "Фамилия 1",
+    "address": "Город 1",
+    "homeTel": "58-88-81",
+    "homeTel2": "57-77-71",
+    "email1": "testmail1-1@bk.ru",
+    "email2": "testmail2-1@bk.ru"
+  },
+  {
+    "name": "Имя 2",
+    "surname": "Фамилия 2",
+    "address": "Город 2",
+    "homeTel": "58-88-82",
+    "homeTel2": "57-77-72",
+    "email1": "testmail1-2@bk.ru",
+    "email2": "testmail2-2@bk.ru"
+  }
+]
