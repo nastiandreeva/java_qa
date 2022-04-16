@@ -71,7 +71,7 @@ public class GroupDataGenerator {
     writer.close();
   }
 
-  // сохранение данных в файл
+  /* сохранение данных в файл */
   private static void saveAsCsv(List<GroupData> groups, File file) throws IOException {
     Writer writer = new FileWriter(file);
     for (GroupData group : groups){
@@ -80,7 +80,7 @@ public class GroupDataGenerator {
     writer.close();
   }
 
-  // генерация данных
+  /* генерация данных */
   private static List<GroupData> generateGroups(int count) {
     List<GroupData> groups = new ArrayList<GroupData>();
     for (int i = 0; i < count; i++) {

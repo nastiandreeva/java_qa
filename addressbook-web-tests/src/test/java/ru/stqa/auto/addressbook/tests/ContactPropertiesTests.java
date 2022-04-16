@@ -19,11 +19,9 @@ public class ContactPropertiesTests extends TestBase{
     if (! app.contact().isThereAContact()) {
       app.goTo().goToNewContactPage();
       app.contact().create(new ContactData().withName("Анастасия").withSurname("Николаева")
-//              .withPatronymic("Олеговна").withNickname("НастяКуа").withCompany("ООО \"Рога и копыта\"")
               .withAddress("город Омск, Космический проспект дом 83, кв. 20")
               .withWorkTel("55-55-33").withMobileTel("+7(908)3180707").withHomeTel("2-35-12").withHomeTel2("8-55-55")
-              .withEmail1("nasti1@gmail.com").withEmail2("nasti2@gmail.com").withEmail3("nasti3@gmail.com"));
-//              .withDatebirth("19").withMonthbirth("February").withYearbirth("1992"));
+              .withEmail1("nasti1@gmail.com").withEmail2("nasti2@gmail.com").withEmail3("nasti3@gmail.com"));;
     }
   }
 
@@ -40,8 +38,7 @@ public class ContactPropertiesTests extends TestBase{
   private String mergeEmails(ContactData contact) {
     return Arrays.asList(contact.getEmail1(), contact.getEmail2(), contact.getEmail3())
             .stream().filter((s) -> ! s.equals(""))
-//            .map(ContactPropertiesTests::cleaned)
-            .collect(Collectors.joining("\n")); // собираем в коллекцию, через сбор значений в поток
+            .collect(Collectors.joining("\n"));                                 // собираем в коллекцию, через сбор значений в поток
   }
 
   private String mergePhones(ContactData contact) {

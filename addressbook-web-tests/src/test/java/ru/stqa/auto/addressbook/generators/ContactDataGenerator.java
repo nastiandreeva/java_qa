@@ -69,7 +69,7 @@ public class ContactDataGenerator {
     writer.close();
   }
 
-  // сохранение данных в файл
+  /* сохранение данных в файл */
   private static void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     Writer writer = new FileWriter(file);
     for (ContactData contact : contacts){
@@ -79,7 +79,7 @@ public class ContactDataGenerator {
     writer.close();
   }
 
-  // генерация данных
+  /* генерация данных */
   private static List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
