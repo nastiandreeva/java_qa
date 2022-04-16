@@ -1,9 +1,15 @@
 package ru.stqa.auto.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.Objects;
 
+@XStreamAlias("group")          // изменение значения тега
 public class GroupData {
+  @XStreamOmitField             // игнорировать и не создавать тег id
   private int id = Integer.MAX_VALUE;
+
   private String name;
   private String header;
   private String footer;
