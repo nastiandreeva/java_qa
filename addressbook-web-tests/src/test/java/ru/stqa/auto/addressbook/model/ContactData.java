@@ -1,14 +1,12 @@
 package ru.stqa.auto.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
   private int id = Integer.MAX_VALUE;;
   private String name;
   private String surname;
-  private String patronymic;
-  private String nickname;
-  private String company;
   private String address;
   private String homeTel;
   private String homeTel2;
@@ -19,9 +17,7 @@ public class ContactData {
   private String email2;
   private String email3;
   private String allEmails;
-  private String datebirth;
-  private String monthbirth;
-  private String yearbirth;
+  private File photo;
 
   public int getId() {
     return id;
@@ -33,18 +29,6 @@ public class ContactData {
 
   public String getSurname() {
     return surname;
-  }
-
-  public String getPatronymic() {
-    return patronymic;
-  }
-
-  public String getNickname() {
-    return nickname;
-  }
-
-  public String getCompany() {
-    return company;
   }
 
   public String getAddress() {
@@ -87,16 +71,8 @@ public class ContactData {
     return email3;
   }
 
-  public String getDatebirth() {
-    return datebirth;
-  }
-
-  public String getMonthbirth() {
-    return monthbirth;
-  }
-
-  public String getYearbirth() {
-    return yearbirth;
+  public File getPhoto() {
+    return photo;
   }
 
   public ContactData withId(int id) {
@@ -111,21 +87,6 @@ public class ContactData {
 
   public ContactData withSurname(String surname) {
     this.surname = surname;
-    return this;
-  }
-
-  public ContactData withPatronymic(String patronymic) {
-    this.patronymic = patronymic;
-    return this;
-  }
-
-  public ContactData withNickname(String nickname) {
-    this.nickname = nickname;
-    return this;
-  }
-
-  public ContactData withCompany(String company) {
-    this.company = company;
     return this;
   }
 
@@ -178,18 +139,8 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withDatebirth(String datebirth) {
-    this.datebirth = datebirth;
-    return this;
-  }
-
-  public ContactData withMonthbirth(String monthbirth) {
-    this.monthbirth = monthbirth;
-    return this;
-  }
-
-  public ContactData withYearbirth(String yearbirth) {
-    this.yearbirth = yearbirth;
+  public ContactData withPhoto(File photo) {
+    this.photo = photo;
     return this;
   }
 
@@ -198,19 +149,28 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(address, that.address) && Objects.equals(homeTel, that.homeTel) && Objects.equals(homeTel2, that.homeTel2) && Objects.equals(mobileTel, that.mobileTel) && Objects.equals(workTel, that.workTel) && Objects.equals(allPhones, that.allPhones) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(allEmails, that.allEmails);
+    return id == that.id && Objects.equals(name, that.name) && Objects.equals(surname, that.surname);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, surname, address, homeTel, homeTel2, mobileTel, workTel, allPhones, email1, email2, email3, allEmails);
+    return Objects.hash(id, name, surname);
   }
 
   @Override
   public String toString() {
     return "ContactData{" +
-            "name='" + name + '\'' +
+            "id=" + id +
+            ", name='" + name + '\'' +
             ", surname='" + surname + '\'' +
+            ", homeTel2='" + homeTel2 + '\'' +
+            ", mobileTel='" + mobileTel + '\'' +
+            ", workTel='" + workTel + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", email1='" + email1 + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", allEmails='" + allEmails + '\'' +
             '}';
   }
 

@@ -4,6 +4,8 @@ import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -11,22 +13,26 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testAddNewContact() throws Exception {
+    Contacts before = app.contact().all();
     app.goTo().goToNewContactPage();
-    Contacts before = app.contact().all(); //объявление переменной типа лист
-    ContactData contact = new ContactData().withName("Анастасия").withSurname("Николаева").withPatronymic("Олеговна")
-            .withNickname("НастяКуа").withCompany("ООО \"Рога и копыта\"").withAddress("город Новый Уренгой")
-            .withWorkTel("55-55-33").withMobileTel("+7(908)3180707").withHometel("2-35-12").withEmail1("naastya@bk.ru").withDatebirth("19")
-            .withMonthbirth("February").withYearbirth("1992");
+    File photo = new File("src/test/java/resources/photo.jpeg");
+    ContactData contact = new ContactData().withName("Анастасия").withSurname("Николаева")
+            .withPhoto(photo).withAddress("город Новый Уренгой")
+            .withWorkTel("55-55-33").withMobileTel("+7(908)3180707").withHomeTel("2-35-12").withHomeTel2("8-55-55")
+            .withEmail1("nasti1@gmail.com").withEmail2("nasti2@gmail.com").withEmail3("nasti3@gmail.com");
     app.contact().create(contact);
-    assertThat(app.contact().count(), equalTo(before.size() + 1 ));
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-
-//    before.add(contact);
-//    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-//    before.sort(byId);
-//    after.sort(byId);
-//    assertEquals(before, after);
   }
+
+  @Test
+  public void testCurrentDir() {
+    File currentDir = new File(".");
+    System.out.println(currentDir.getAbsolutePath());
+    File photo = new File("src/test/resources/.photo.jpg");
+    System.out.println(photo.getAbsolutePath());
+    System.out.println(photo.exists());                               // проверка что файл существует
+    }
 
 }

@@ -25,24 +25,21 @@ public class ContactHelper extends HelperBase{
   }
 
   public void fillNewContactForm(ContactData contactData) {
-    type("firstname", contactData.getName());
-    type("middlename", contactData.getPatronymic());
-    type("lastname", contactData.getSurname());
-    type("nickname", contactData.getNickname());
-    type("company", contactData.getCompany());
-    type("address", contactData.getAddress());
-    type("home", contactData.getHomeTel());
-    type("mobile", contactData.getMobileTel());
-    type("work", contactData.getWorkTel());
-    type("email", contactData.getEmail1());
-    type("email2", contactData.getEmail2());
-    type("email3", contactData.getEmail3());
-    wd.findElement(By.name("bday")).click();
-    new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getDatebirth());
-    wd.findElement(By.name("bmonth")).click();
-    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonthbirth());
-    type("byear", contactData.getYearbirth());
-
+    type(By.name("firstname"), contactData.getName());
+    type(By.name("lastname"), contactData.getSurname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHomeTel());
+    type(By.name("mobile"), contactData.getMobileTel());
+    type(By.name("work"), contactData.getWorkTel());
+    type(By.name("email"), contactData.getEmail1());
+    type(By.name("email2"), contactData.getEmail2());
+    type(By.name("email3"), contactData.getEmail3());
+    attach(By.name("photo"), contactData.getPhoto());
+//    wd.findElement(By.name("bday")).click();
+//    new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getDatebirth());
+//    wd.findElement(By.name("bmonth")).click();
+//    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getMonthbirth());
+//    type("byear", contactData.getYearbirth());
 //    if (creation) { //условие на то, что если это страницы создания контакта то поле выбора группы есть, иначе если страница модификации, то выпадающего списка выбора группы не должно быть
 //      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
 //    } else {
