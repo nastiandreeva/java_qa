@@ -26,9 +26,9 @@ public class GroupHelper extends HelperBase{
   }
 
   public void fillGroupForm(GroupData groupData) {
-    type("group_name", groupData.getName());
-    type("group_header", groupData.getHeader());
-    type("group_footer", groupData.getFooter());
+    type(By.name("group_name"), groupData.getName());
+    type(By.name("group_header"), groupData.getHeader());
+    type(By.name("group_footer"), groupData.getFooter());
   }
 
   public void initGroupCreation() {
@@ -101,9 +101,9 @@ public class GroupHelper extends HelperBase{
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));                          //получаем список элементов в лист elements
     for (WebElement element : elements) {                                                               //проходимся по списку elements
       String nameGroup = element.getText();                                                             //получаем текст элемента списка в переменную
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //получаем значение из тегов на странице
-      GroupData group = new GroupData().withId(id).withName(nameGroup);                         //создаем объект типа GroupData
-      groups.add(group);                                                                               //добавляем созданный объект в список
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));  //получаем значение из тегов на странице
+      GroupData group = new GroupData().withId(id).withName(nameGroup);                                 //создаем объект типа GroupData
+      groups.add(group);                                                                                //добавляем созданный объект в список
 
     }
     return groups;
