@@ -8,9 +8,10 @@ dependencies {  //библиотеки
     implementation 'org.testng:testng:7.5'
     implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
     implementation 'junit:junit:4.12'
-    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'             // библиотека для сравнения двух строк, «matcher»-ом является equalTo(), функция же assertThat()
-    implementation 'com.beust:jcommander:1.82'                      // библиотека для обработки оопций командной строки
-    implementation 'com.thoughtworks.xstream:xstream:1.4.19'        // библиотека для сериализации/десериализации xml
+    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'              // библиотека для сравнения двух строк, «matcher»-ом является equalTo(), функция же assertThat()
+    implementation 'com.beust:jcommander:1.82'                       // библиотека для обработки оопций командной строки
+    implementation 'com.thoughtworks.xstream:xstream:1.4.19'         // библиотека для сериализации/десериализации xml
+    implementation 'com.google.code.gson:gson:2.9.0'                 // библиотека для сериализации/десериализации json
 }
 
 test {

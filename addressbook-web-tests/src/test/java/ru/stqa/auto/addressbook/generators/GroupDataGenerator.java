@@ -3,6 +3,8 @@ package ru.stqa.auto.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.auto.addressbook.model.GroupData;
 
@@ -43,18 +45,26 @@ public class GroupDataGenerator {
       saveAsCsv(groups, new File(file));
     } else if (format.equals("xml")){
       saveAsXml(groups, new File(file));
-//    } else if (format.equals("json")){
-//      saveAsJson(groups, new File(file));
+    } else if (format.equals("json")){
+      saveAsJson(groups, new File(file));
     } else {
       System.out.println("Unrecognized format" + format);
     }
   }
 
+  private void saveAsJson(List<GroupData> groups, File file) throws IOException {
+    Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();   // setPrettyPrinting для более читаемого вида, а не просто new Gson. excludeFieldsWithoutExposeAnnotation для того что бы указать какие теги пишем
+    String json = gson.toJson(groups);
+    Writer writer = new FileWriter(file);
+    writer.write(json);
+    writer.close();
+  }
+
   private void saveAsXml(List<GroupData> groups, File file) throws IOException {
     XStream xstream = new XStream();
-    xstream.processAnnotations(GroupData.class);          // работа с тегами через аннотации в GroupData
-//    xstream.alias("group", GroupData.class);        // изменение значения тега
-//    xstream.omitField(GroupData.class, "id");    // игнорировать и не создавать тег id
+    xstream.processAnnotations(GroupData.class);                  // работа с тегами через аннотации в GroupData
+//    xstream.alias("group", GroupData.class);                    // изменение значения тега
+//    xstream.omitField(GroupData.class, "id");                   // игнорировать и не создавать тег id
     String xml = xstream.toXML(groups);
     Writer writer = new FileWriter(file);
     writer.write(xml);

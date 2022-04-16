@@ -1,17 +1,20 @@
 package ru.stqa.auto.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.util.Objects;
 
-@XStreamAlias("group")          // изменение значения тега
+@XStreamAlias("group")          // xml. изменение значения тега
 public class GroupData {
-  @XStreamOmitField             // игнорировать и не создавать тег id
+  @XStreamOmitField             // xml. игнорировать и не создавать тег id
   private int id = Integer.MAX_VALUE;
-
+  @Expose                       // json. добавить тег в файл
   private String name;
+  @Expose
   private String header;
+  @Expose
   private String footer;
 
   public int getId() {
