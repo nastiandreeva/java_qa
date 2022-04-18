@@ -55,9 +55,9 @@ public class GroupDataGenerator {
   private void saveAsJson(List<GroupData> groups, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();   // setPrettyPrinting для более читаемого вида, а не просто new Gson. excludeFieldsWithoutExposeAnnotation для того что бы указать какие теги пишем
     String json = gson.toJson(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<GroupData> groups, File file) throws IOException {
@@ -66,9 +66,9 @@ public class GroupDataGenerator {
 //    xstream.alias("group", GroupData.class);                    // изменение значения тега
 //    xstream.omitField(GroupData.class, "id");                   // игнорировать и не создавать тег id
     String xml = xstream.toXML(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   /* сохранение данных в файл */

@@ -55,18 +55,18 @@ public class ContactDataGenerator {
   private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();   // setPrettyPrinting для более читаемого вида, а не просто new Gson. excludeFieldsWithoutExposeAnnotation для того что бы указать какие теги пишем
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {                                                         // try исольуется для закрытия записи в файл и чтения из файла, что бы не расходовалась лишняя память
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     XStream xstream = new XStream();
-    xstream.processAnnotations(ContactData.class);                  // работа с тегами через аннотации в ContactData
+    xstream.processAnnotations(ContactData.class);                                                        // работа с тегами через аннотации в ContactData
     String xml = xstream.toXML(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   /* сохранение данных в файл */

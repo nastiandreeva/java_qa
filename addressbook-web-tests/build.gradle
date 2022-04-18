@@ -14,11 +14,31 @@ dependencies {  //библиотеки
     implementation 'com.google.code.gson:gson:2.9.0'                 // библиотека для сериализации/десериализации json
 }
 
-test {
-    useTestNG()
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/java/resources/testng-contacts.xml'
+    }
+    if (project.hasProperty('browser')) {
+        System.getProperty('browser', "${browser}")
+    }
+    if (project.hasProperty('target')) {
+        System.getProperty('target', "${target}")
+    }
 }
 
-tasks.withType(JavaCompile) { // для заполнение данными в тестах на русском
+task testGroups(type: Test) {
+    useTestNG {
+        suites 'src/test/java/resources/testng-groups.xml'
+    }
+    if (project.hasProperty('browser')) {
+        System.getProperty('browser', "${browser}")
+    }
+    if (project.hasProperty('target')) {
+        System.getProperty('target', "${target}")
+    }
+}
+
+tasks.withType(JavaCompile) {                                        // для заполнение данными в тестах на русском
     options.encoding = 'UTF-8'
 }
 tasks.withType(Test) {

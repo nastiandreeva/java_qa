@@ -7,7 +7,8 @@ import ru.stqa.auto.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-  protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);  //создали делегирование вместо наследования
+  protected static final ApplicationManager app                                                 //создали делегирование вместо наследования
+          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));      // создаем переменную для указания браузера в конфигурационных настройках, иначе если не указан запускаем в хроме
 
   @BeforeSuite
   public void setUp() throws Exception {
