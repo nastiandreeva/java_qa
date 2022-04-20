@@ -12,6 +12,7 @@ dependencies {  //библиотеки
     implementation 'com.beust:jcommander:1.82'                       // библиотека для обработки оопций командной строки
     implementation 'com.thoughtworks.xstream:xstream:1.4.19'         // библиотека для сериализации/десериализации xml
     implementation 'com.google.code.gson:gson:2.9.0'                 // библиотека для сериализации/десериализации json
+    implementation 'mysql:mysql-connector-java:8.0.28'               // библиотека для работы с mysql
 }
 
 task testContacts(type: Test) {
