@@ -1,32 +1,72 @@
 package ru.stqa.auto.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
+@Entity                         // приязывает класс к бд
+@Table(name = "addressbook")
 public class ContactData {
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;;
+
   @Expose
+  @Column(name = "firstname")
   private String name;
+
   @Expose
+  @Column(name = "lastname")
   private String surname;
+
   @Expose
+  @Transient
   private String address;
+
   @Expose
+  @Column(name = "home")
+  @Type(type = "text")
   private String homeTel;
+
   @Expose
+  @Transient
   private String homeTel2;
+
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobileTel;
+
+  @Column(name = "work")
+  @Type(type = "text")
   private String workTel;
+
+  @Transient
   private String allPhones;
+
   @Expose
+  @Column(name = "email")
+  @Type(type = "text")
   private String email1;
+
   @Expose
+  @Column(name = "email2")
+  @Type(type = "text")
   private String email2;
+
+  @Expose
+  @Column(name = "email3")
+  @Type(type = "text")
   private String email3;
+
+  @Transient
   private String allEmails;
-  private File photo;
+
+  @Column(name = "photo")
+  @Type(type = "text")
+  private String photo;
 
   public int getId() {
     return id;
@@ -81,7 +121,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return photo;
+    return new File(photo);
   }
 
   public ContactData withId(int id) {
@@ -149,7 +189,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -172,14 +212,6 @@ public class ContactData {
             "id=" + id +
             ", name='" + name + '\'' +
             ", surname='" + surname + '\'' +
-            ", homeTel2='" + homeTel2 + '\'' +
-            ", mobileTel='" + mobileTel + '\'' +
-            ", workTel='" + workTel + '\'' +
-            ", allPhones='" + allPhones + '\'' +
-            ", email1='" + email1 + '\'' +
-            ", email2='" + email2 + '\'' +
-            ", email3='" + email3 + '\'' +
-            ", allEmails='" + allEmails + '\'' +
             '}';
   }
 

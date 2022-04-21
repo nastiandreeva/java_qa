@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.util.List;
@@ -34,13 +35,25 @@ public class HbConnectionTest {
   }
 
   @Test
-  public void testHbConnection(){
+  public void testHbConnectionGroup(){
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List<GroupData> result = session.createQuery( "from GroupData" ).list();   // запрос к объекту, вместо запроса sql
     for ( GroupData group : result ) {
       System.out.println(group);
   }
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Test
+  public void testHbConnectionContact(){
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<ContactData> result = session.createQuery( "from ContactData where deprecated = '0000-00-00'" ).list();   // запрос к объекту, вместо запроса sql
+    for ( ContactData contact : result ) {
+      System.out.println(contact);
+    }
     session.getTransaction().commit();
     session.close();
   }

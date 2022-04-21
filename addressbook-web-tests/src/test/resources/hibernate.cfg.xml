@@ -13,7 +13,7 @@
 
         <!-- Database connection settings -->
         <!-- имя драйвера из документации по sql, направляем на нашу базу -->
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/addressbook</property>
         <property name="connection.username">root</property>
         <property name="connection.password"></property>
@@ -37,6 +37,10 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <!-- Names the annotated entity class -->
+        <!-- привязка -->
         <mapping class="ru.stqa.auto.addressbook.model.GroupData"/>
+        <mapping class="ru.stqa.auto.addressbook.model.ContactData"/>
+
     </session-factory>
+
 </hibernate-configuration>
