@@ -2,7 +2,6 @@ package ru.stqa.auto.addressbook.tests;
 
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,10 +9,8 @@ import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,7 +20,7 @@ public class GroupCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validGroupsXml() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/java/resources/groups/groups.xml")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups/groups.xml")))) {
       String xml = "";
       String line = reader.readLine();
       while (line != null) {
@@ -39,7 +36,7 @@ public class GroupCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validGroupsJson() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/java/resources/groups/groups.json")));
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups/groups.json")));
     String json = "";
     String line = reader.readLine();
     while (line != null){

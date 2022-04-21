@@ -13,6 +13,8 @@ dependencies {  //библиотеки
     implementation 'com.thoughtworks.xstream:xstream:1.4.19'         // библиотека для сериализации/десериализации xml
     implementation 'com.google.code.gson:gson:2.9.0'                 // библиотека для сериализации/десериализации json
     implementation 'mysql:mysql-connector-java:8.0.28'               // библиотека для работы с mysql
+    implementation 'org.hibernate:hibernate-core:5.6.8.Final'        // библиотека для работы с orm
+    implementation 'ch.qos.logback:logback-classic:1.2.10'           // библиотека для логирования
 }
 
 task testContacts(type: Test) {
