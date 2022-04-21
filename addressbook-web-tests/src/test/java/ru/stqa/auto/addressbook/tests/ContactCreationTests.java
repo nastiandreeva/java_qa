@@ -6,7 +6,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
-import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,7 +22,7 @@ public class ContactCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validContactsJson() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/java/resources/contacts/contacts.json")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts/contacts.json")))) {
     String json = "";
     String line = reader.readLine();
     while (line != null){
