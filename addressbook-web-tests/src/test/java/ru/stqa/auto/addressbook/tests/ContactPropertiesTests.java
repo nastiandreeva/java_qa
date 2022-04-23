@@ -33,6 +33,8 @@ public class ContactPropertiesTests extends TestBase{
     assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));    // проверка адреса
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));  // проверка эл. почты
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));  // проверка телефонов
+
+    verifyContactListInUi();
   }
 
   private String mergeEmails(ContactData contact) {

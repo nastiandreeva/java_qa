@@ -44,6 +44,8 @@ public class ContactCreationTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+
+    verifyContactListInUi();                                          // отключаемый в Configurations метод для сравнения списков контактов из бд и с ui
   }
 
   @Test
@@ -53,6 +55,8 @@ public class ContactCreationTests extends TestBase {
     File photo = new File("src/test/resources/contacts/.photo.jpg");
     System.out.println(photo.getAbsolutePath());
     System.out.println(photo.exists());                               // проверка что файл существует
-    }
+
+    verifyContactListInUi();
+  }
 
 }

@@ -57,6 +57,8 @@ public class GroupCreationTests extends TestBase {
     Groups after = app.db().groups();
     assertThat(after, equalTo(
             before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())))); // 4 Set способ сравнения. Поток идентификации что бы сравнение сразу шло по айди преобразованному в число. в качестве параметра применяется группа а выдается как идентификатор.
+
+    verifyGroupListInUi();
   }
 
   @Test
@@ -68,6 +70,8 @@ public class GroupCreationTests extends TestBase {
     assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.db().groups();
     assertThat(after, equalTo(before));
+
+    verifyGroupListInUi();
   }
 
 

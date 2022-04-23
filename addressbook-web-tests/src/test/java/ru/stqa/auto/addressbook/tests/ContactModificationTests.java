@@ -44,6 +44,8 @@ public class ContactModificationTests extends TestBase{
     Contacts after = app.contact().all();                                     //постусловия "получить список контактов" для сравнение со списком из предусловия
     MatcherAssert.assertThat(after, CoreMatchers.equalTo(before.without(modifiedContact).withAdded(contact)));
 
+    verifyContactListInUi();
+
 //    before.remove(before.size() - 1 );                                      // удаляем контакт
 //    before.add(contact);
 //    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
