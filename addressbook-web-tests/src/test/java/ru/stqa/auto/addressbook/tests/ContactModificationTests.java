@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase{
     if (app.db().contacts().size() == 0) {                                    // получение списка контактов с бд
       app.goTo().goToNewContactPage();
       app.contact().create(new ContactData().withName("Анастасия").withSurname("Николаева")
-              .withAddress("город Новый Уренгой")
+              .withCompany("OOO Джэмс").withAddress("город Новый Уренгой")
               .withWorkTel("55-55-33").withHomeTel("2-35-12").withEmail1("naastya@bk.ru"));
     }
 

@@ -17,13 +17,13 @@ import java.util.List;
 
 public class ContactDataGenerator {
 
-  @Parameter(names = "-c", description = "Contact count")  // значения этих переменных указывается в Configurations
+  @Parameter(names = "-c", description = "Contact count")  // кол-во контактов, значения этих переменных указывается в Configurations
   public int count;
 
-  @Parameter(names = "-f", description = "Target file")  // значения этих переменных указывается в Configurations
+  @Parameter(names = "-f", description = "Target file")   // путь до файла, -c 3 -f src/test/resources/contacts/contacts.json -d json
   public String file;
 
-  @Parameter(names = "-d", description = "Format data")  // значения этих переменных указывается в Configurations
+  @Parameter(names = "-d", description = "Format data")   // формат создаваемого файла
   public String format;
 
   public static void main (String[] args) throws IOException {
@@ -83,7 +83,7 @@ public class ContactDataGenerator {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData().withName(String.format("Имя %s", i)).
-              withSurname(String.format("Фамилия %s", i)).withHomeTel(String.format("58-88-8%s", i))
+              withSurname(String.format("Фамилия %s", i)).withCompany(String.format("ООО Компания №%s", i))
               .withAddress(String.format("Город %s", i)).withHomeTel(String.format("58-88-8%s", i)).withHomeTel2(String.format("57-77-7%s", i))
               .withEmail1(String.format("testmail1-%s@bk.ru", i)).withEmail2(String.format("testmail2-%s@bk.ru", i)));
     }

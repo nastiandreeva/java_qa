@@ -23,6 +23,10 @@ public class ContactData {
   private String surname;
 
   @Expose
+  @Column(name = "company")
+  private String company;
+
+  @Expose
   @Transient
   private String address;
 
@@ -78,6 +82,10 @@ public class ContactData {
 
   public String getSurname() {
     return surname;
+  }
+
+  public String getCompany() {
+    return company;
   }
 
   public String getAddress() {
@@ -136,6 +144,11 @@ public class ContactData {
 
   public ContactData withSurname(String surname) {
     this.surname = surname;
+    return this;
+  }
+
+  public ContactData withCompany(String company) {
+    this.company = company;
     return this;
   }
 
