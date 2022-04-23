@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
 
-import java.security.acl.Group;
 import java.sql.*;
 
 public class DbConnectionTest {

@@ -26,6 +26,7 @@ public class ApplicationManager {
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;                                //в этом классе находятся все вспомогательные действия
   private String browser;
+  private DbHelper dbHeper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -35,6 +36,8 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+    dbHeper = new DbHelper();                                     // проверяется соединение с бд до того как начали запускать браузеры
 
     if (browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
@@ -87,5 +90,9 @@ public class ApplicationManager {
 
   public ContactHelper contact() {
     return contactHelper;
+  }
+
+  public DbHelper db(){
+    return dbHeper;
   }
 }

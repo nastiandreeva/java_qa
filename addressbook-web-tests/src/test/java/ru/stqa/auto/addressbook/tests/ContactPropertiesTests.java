@@ -16,7 +16,7 @@ public class ContactPropertiesTests extends TestBase{
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().goToHomePage();
-    if (! app.contact().isThereAContact()) {
+    if (app.db().contacts().size() == 0) {
       app.goTo().goToNewContactPage();
       app.contact().create(new ContactData().withName("Анастасия").withSurname("Николаева")
               .withAddress("город Омск, Космический проспект дом 83, кв. 20")

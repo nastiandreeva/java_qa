@@ -14,8 +14,8 @@ public class GroupDeletionTests extends TestBase {
   /* предусловие перед выполнением кейса по созданию группы, что бы можно было использовать это для всех тестов по модификации */
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    if (app.group().all().size() == 0) {
+    if (app.db().groups().size() == 0) {               // получение списка групп с бд
+      app.goTo().groupPage();
       app.group().create(new GroupData().withName("test1"));
     }
   }
@@ -23,11 +23,12 @@ public class GroupDeletionTests extends TestBase {
   /* кейсы по удалению групп */
   @Test
   public void testGroupDeletion(){
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     GroupData deletedGroup = before.iterator().next(); // последовательно перебираем итератор который вернет первый попавшийся элемент
+    app.goTo().groupPage();
     app.group().delete(deletedGroup);
     assertEquals(app.group().count(), before.size() - 1);
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
 

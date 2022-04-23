@@ -11,11 +11,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDeletionTests extends TestBase{
 
+  /* предусловие перед выполнением кейса по созданию контактов, что бы можно было использовать это для всех тестов по модификации */
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().goToHomePage();
-    if (! app.contact().isThereAContact()) {          //предусловия на то, если нет контакта что бы выделить для удаления, то создать
-      app.goTo().goToNewContactPage();
+    if (app.db().contacts().size() == 0) {             // получение списка контактов с бд
+      app.goTo().goToHomePage();
       app.contact().create(new ContactData().withName("Александр").withSurname("Николаев")
               .withAddress("город Омск")
               .withWorkTel("55-55-33").withHomeTel("2-35-12").withEmail1("ortho@bk.ru"));
@@ -24,11 +24,12 @@ public class ContactDeletionTests extends TestBase{
 
   @Test
   public void testContactDeletion() {
-    Contacts before = app.contact().all();            //предусловия "получить список контактов"
+    Contacts before = app.db().contacts();            //предусловия "получить список контактов"
     ContactData deletedContact = before.iterator().next();
+    app.goTo().goToHomePage();
     app.contact().delete(deletedContact);
     Assert.assertEquals(app.contact().count(), before.size() - 1);
-    Contacts after = app.contact().all();             //постусловия "получить список контактов" для сравнение со списком из предусловия
+    Contacts after = app.db().contacts();             //постусловия "получить список контактов" для сравнение со списком из предусловия
     assertThat(after, equalTo(before.without(deletedContact)));
   }
 
