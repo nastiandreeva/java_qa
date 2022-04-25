@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
+import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -58,8 +59,8 @@ public class ContactHelper extends HelperBase{
 
   public void initContactModification(int id) {
 //    click(By.xpath("//img[@alt='Edit']"));
-    wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
-//    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+//    wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
   }
 
   public void submitContactModification() {
@@ -92,6 +93,26 @@ public class ContactHelper extends HelperBase{
     goToPageContactModification();
     fillNewContactForm(contact);
     submitContactModification();
+    returnToContactPage();
+  }
+
+  public void selectGroupForAdd(ContactData contact) {
+    selectContactById(contact.getId());
+    setGroupForContact();
+    returnToContactPage();
+  }
+
+  private void setGroupForContact() {
+    click(By.name("to_group"));
+    new Select(wd.findElement(By.name("to_group"))).selectByIndex(0);
+    click(By.name("add"));
+  }
+
+  public void viewContactInGroup(ContactData contact) {
+    click(By.name("group"));
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());  // переходим в группу
+    selectContactById(contact.getId());                                                                                 // выбираем контакт
+    click(By.name("remove"));                                                                                           // нажимаем удалить
     returnToContactPage();
   }
 
@@ -141,4 +162,5 @@ public class ContactHelper extends HelperBase{
             .withHomeTel(home).withHomeTel2(home2).withMobileTel(mobile).withWorkTel(work)
             .withEmail1(email1).withEmail2(email2).withEmail3(email3);
   }
+
 }

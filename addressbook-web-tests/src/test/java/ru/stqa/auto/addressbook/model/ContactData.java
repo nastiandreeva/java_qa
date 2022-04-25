@@ -5,7 +5,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity                         // приязывает класс к бд
 @Table(name = "addressbook")
@@ -72,6 +74,12 @@ public class ContactData {
   @Type(type = "text")
   private String photo;
 
+  /* работа со связью многие ко многим по ключу в отдельной таблице, объявляется и для контакта и для группы
+  * EAGER - при запросе к бд извлекается как можно больше информации, для того что бы сразу после этого закрыть транзакцию */
+  @ManyToMany (fetch = FetchType.EAGER)
+  @JoinTable (name = "address_in_groups", joinColumns = @JoinColumn (name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
   public int getId() {
     return id;
   }
@@ -130,6 +138,10 @@ public class ContactData {
 
   public File getPhoto() {
     return new File(photo);
+  }
+
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   public ContactData withId(int id) {

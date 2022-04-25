@@ -5,11 +5,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("group")          // xml. изменение значения тега
 @Entity                         // приязывает класс к бд
@@ -34,6 +33,11 @@ public class GroupData {
   @Type(type = "text")
   private String footer;
 
+  /* работа со связью многие ко многим по ключу в отдельной таблице, объявляется и для контакта и для группы
+  * второй раз описывать связь не нужно, пишется только элемент который есть в ContactData и связь ситается там */
+  @ManyToMany (mappedBy = "groups")
+  private Set<ContactData> groups = new HashSet<ContactData>();
+
   public int getId() {
     return id;
   }
@@ -48,6 +52,10 @@ public class GroupData {
 
   public String getFooter() {
     return footer;
+  }
+
+  public Contacts getGroups() {
+    return new Contacts(groups);
   }
 
   public GroupData withId(int id) {

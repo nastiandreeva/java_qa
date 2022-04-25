@@ -53,4 +53,5 @@ public class ContactPropertiesTests extends TestBase{
   public static String cleanedDelimiter(String phone){
     return phone.replaceAll("\\s","").replaceAll("[-()]", "");
   }
+
 }
