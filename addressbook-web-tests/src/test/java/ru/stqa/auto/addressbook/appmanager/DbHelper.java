@@ -11,6 +11,7 @@ import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DbHelper {
