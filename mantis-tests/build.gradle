@@ -1,0 +1,34 @@
+apply plugin: 'java'
+
+repositories {  //подключение места откуда будет тянутся библиотека
+    mavenCentral()
+}
+
+dependencies {  //библиотеки
+    implementation 'org.testng:testng:7.5'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+    implementation 'junit:junit:4.12'
+    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'              // библиотека для сравнения двух строк, «matcher»-ом является equalTo(), функция же assertThat()
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/java/resources/testng-contacts.xml'
+    }
+    if (project.hasProperty('browser')) {
+        System.getProperty('browser', "${browser}")
+    }
+    if (project.hasProperty('target')) {
+        System.getProperty('target', "${target}")
+    }
+    if (project.hasProperty('verifyUi')) {
+        System.getProperty('verifyUi', "${target}")
+    }
+}
+
+tasks.withType(JavaCompile) {                                        // для заполнение данными в тестах на русском
+    options.encoding = 'UTF-8'
+}
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
