@@ -50,8 +50,8 @@ public class DbHelper {
     session.getTransaction().commit();
     Query result = session.createQuery( "from ContactData where id = :id" );
     result.setParameter("id", id);
-    List<ContactData> list = result.list();
+    ContactData contact = (ContactData) result.getSingleResult();
     session.close();
-    return (ContactData) list;
+    return contact;
   }
 }
