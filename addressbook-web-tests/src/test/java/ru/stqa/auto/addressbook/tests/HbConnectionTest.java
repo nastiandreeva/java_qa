@@ -41,7 +41,7 @@ public class HbConnectionTest {
     List<GroupData> result = session.createQuery( "from GroupData" ).list();   // запрос к объекту, вместо запроса sql
     for ( GroupData group : result ) {
       System.out.println(group);
-  }
+    }
     session.getTransaction().commit();
     session.close();
   }

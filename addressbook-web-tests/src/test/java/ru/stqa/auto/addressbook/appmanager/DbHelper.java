@@ -10,11 +10,11 @@ import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
+import ru.stqa.auto.addressbook.tests.TestBase;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class DbHelper {
+public class DbHelper extends TestBase {
 
   private final SessionFactory sessionFactory;
 
@@ -42,6 +42,17 @@ public class DbHelper {
     session.getTransaction().commit();
     session.close();
     return new Contacts(result);
+  }
+
+  public int idGroupWithoutContact(int id) {                                         // получаем список групп в которых нет передаваемого айди контакта
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    session.getTransaction().commit();
+    Query result = session.createQuery( "from GroupData where id != :id" );
+    result.setParameter("id", id);
+    GroupData groupId = (GroupData) result.getSingleResult();
+    session.close();
+    return groupId.getId();
   }
 
   public ContactData contactsInGroup(int id) {                                             // получаем список контактов в группах через досутп к бд

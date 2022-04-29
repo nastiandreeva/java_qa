@@ -6,8 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
-import ru.stqa.auto.addressbook.model.GroupData;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -96,24 +97,45 @@ public class ContactHelper extends HelperBase{
     returnToContactPage();
   }
 
-  public void selectGroupForAdd(ContactData contact) {
-    selectContactById(contact.getId());
-    setGroupForContact();
-    returnToContactPage();
+//  public void addContactInGroup(ContactData contact, GroupData group){
+//    selectContactById(contact.getId());
+//    setGroupForContact(group);
+//    addInGroup();
+//    returnToContactPage();
+//  }
+
+//  public void selectGroupForAdd(String nameGroup) {
+//    selectContactById(idContact);
+//    int idGroup = idGroupWithoutContact(idContact);
+//    System.out.println(idGroup);
+//
+//    selectContactById(contact.getId());
+//    setGroupForContact(idGroup);
+//  }
+
+  public void setGroupForContact(String nameGroup) {
+    click(By.name("to_group"));
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(nameGroup);
   }
 
-  private void setGroupForContact() {
-    click(By.name("to_group"));
-    new Select(wd.findElement(By.name("to_group"))).selectByIndex(0);
+  public void addInGroup(){
     click(By.name("add"));
   }
 
-  public void viewContactInGroup(ContactData contact) {
+  public void selectContactForDeleted(ContactData contact){
+    selectGroupForViewContact(contact);
+    selectContactById(contact.getId());                                                                                 // выбираем контакт
+    deleteContactFromGroup();                                                                       // нажимаем удалить
+    returnToContactPage();
+  }
+
+  public void selectGroupForViewContact(ContactData contact) {
     click(By.name("group"));
     new Select(wd.findElement(By.name("group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());  // переходим в группу
-    selectContactById(contact.getId());                                                                                 // выбираем контакт
-    click(By.name("remove"));                                                                                           // нажимаем удалить
-    returnToContactPage();
+  }
+
+  public void deleteContactFromGroup(){
+    click(By.name("remove"));
   }
 
   public boolean isThereAContact() { //проверка наличия элемента для дальнейшего изменения/удаления
