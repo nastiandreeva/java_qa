@@ -9,6 +9,8 @@ dependencies {  //библиотеки
     implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
     implementation 'junit:junit:4.12'
     implementation 'org.hamcrest:java-hamcrest:2.0.0.0'              // библиотека для сравнения двух строк, «matcher»-ом является equalTo(), функция же assertThat()
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'     // библиотека для работы через запросы http
+
 }
 
 task testContacts(type: Test) {

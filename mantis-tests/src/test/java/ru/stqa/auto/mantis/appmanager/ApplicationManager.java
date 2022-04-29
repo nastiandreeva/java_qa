@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.HttpSessionId;
 
 import java.io.File;
 import java.io.FileReader;
@@ -41,5 +42,13 @@ public class ApplicationManager {
 
   public void stop() {
     wd.quit();
+  }
+
+  public HttpSession newSession() { // метод инициализации помощника при каждом обращении, для открытия нескольких сессий, например пользователя и администратора
+    return new HttpSession(this);
+  }
+
+  public String getProperty(String key) {    // получаем значение свойства
+    return properties.getProperty(key);
   }
 }
