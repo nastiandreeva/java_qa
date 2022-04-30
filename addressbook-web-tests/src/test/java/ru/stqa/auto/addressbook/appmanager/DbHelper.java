@@ -48,11 +48,11 @@ public class DbHelper extends TestBase {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     session.getTransaction().commit();
-    Query result = session.createQuery( "from GroupData where id != :id" );
+    Query result = session.createQuery( "from GroupData where group_id != :id" );
     result.setParameter("id", id);
-    GroupData groupId = (GroupData) result.getSingleResult();
+    List<GroupData> groupId = result.getResultList();
     session.close();
-    return groupId.getId();
+    return groupId.get(0).getId();
   }
 
   public ContactData contactsInGroup(int id) {                                             // получаем список контактов в группах через досутп к бд

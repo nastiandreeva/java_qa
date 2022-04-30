@@ -25,7 +25,7 @@ public class ContactDeleteFromGroup extends TestBase {
               .withWorkTel("55-55-33").withHomeTel("2-35-12").withEmail1("ortho@bk.ru"));
     }
 
-    if (app.db().groups().size() == 0) {                          // смотрим есть ли группа в бд и если нет, то создаем
+    if (app.db().groups().size() == 0) {                                                    // смотрим есть ли группа в бд и если нет, то создаем
       app.goTo().groupPage();
       app.group().create(new GroupData().withName("test1"));
     }
@@ -51,15 +51,6 @@ public class ContactDeleteFromGroup extends TestBase {
     ContactData contactInGroup = app.db().contactsInGroup(idContact);
     Groups groupDelete = contactInGroup.getGroups();
     app.contact().selectContactForDeleted(contactInGroup);
-
-                                                                                // если контакта нет в группе, то добавляем ему группу
-
-//      app.goTo().goToHomePage();                                                                                    // сначала переходим на главную
-//      app.contact().selectGroupForAdd(addContactToGroup);                                                           // добавляем контакт в группу
-//    }
-//    ContactData contactInGroup = app.db().contactsInGroup(idContact);
-//    Groups groupDelete = contactInGroup.getGroups();
-//    app.contact().selectGroupForViewContact(contactInGroup);
     assertThat(app.db().contactsInGroup(contactInGroup.getId()).getGroups().contains(groupDelete), equalTo(false));// проверяем что у контакта нет группы
 
     verifyContactListInUi();
