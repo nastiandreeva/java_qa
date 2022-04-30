@@ -44,7 +44,7 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public HttpSession newSession() { // метод инициализации помощника при каждом обращении, для открытия нескольких сессий, например пользователя и администратора
+  public HttpSession newSession() {           // метод инициализации помощника при каждом обращении, для открытия нескольких сессий, например пользователя и администратора
     return new HttpSession(this);
   }
 
