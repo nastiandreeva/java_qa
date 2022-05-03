@@ -34,12 +34,12 @@ public class HttpSession {
     List<NameValuePair> params = new ArrayList<>();
     params.add( new BasicNameValuePair("username", username));                    // формируются параметры для тела
     params.add( new BasicNameValuePair("password", password));
+    params.add(new BasicNameValuePair("return","index.php"));
     params.add( new BasicNameValuePair("secure_session", "on"));
-    params.add( new BasicNameValuePair("return", "index.php"));
     post.setEntity( new UrlEncodedFormEntity(params));                                  // параметры упаковываются и помещаются в запрос
     CloseableHttpResponse response = httpclient.execute(post);                          // отправка, запрос выполняется
     String body = geTextForm(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>", username));  // проверка что пользователь вошел и написано его имя
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));  // проверка что пользователь вошел и написано его имя
   }
 
   private String geTextForm(CloseableHttpResponse response) throws IOException  {
@@ -51,10 +51,10 @@ public class HttpSession {
   }
 
   public boolean isLoggedInAs(String username) throws IOException {                   // метод для определения какой пользователь сейчас вошел в систему
-    HttpGet get = new HttpGet(app.getProperty("web.BaseUrl") + "/index.php");
+    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
     CloseableHttpResponse response = httpclient.execute(get);
     String body = geTextForm(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
   }
 
 }

@@ -5,7 +5,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.HttpSessionId;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +18,7 @@ public class ApplicationManager {
   private WebDriver wd;                     // сделали приватным что бы никто не обратился случайно
 
   private String browser;
-  private RegistrationHelper registrationHelpr;
+  private RegistrationHelper registrationHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -46,10 +45,10 @@ public class ApplicationManager {
   }
 
   public RegistrationHelper registration() {
-    if (registrationHelpr == null) {
-      registrationHelpr = new RegistrationHelper(this);
+    if (registrationHelper == null) {
+      registrationHelper = new RegistrationHelper(this);
     }
-    return registrationHelpr;
+    return registrationHelper;
   }
 
   public WebDriver getDriver() {
