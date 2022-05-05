@@ -1,9 +1,13 @@
 package ru.stqa.auto.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
+import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
+import ru.stqa.auto.addressbook.model.Groups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,23 +27,24 @@ public class ContactAddInGroup extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
+    long now = System.currentTimeMillis();
     if (app.db().contacts().size() > 0) {
       List<ContactData> contacts = new ArrayList<ContactData>(app.db().contacts());
       for (ContactData contact : contacts) {
         System.out.println(contact.getGroups());
-        if (contact.getGroups().size() == 0) {                      // берем список контактов и смотрим есть ли контакт у которого нет группы
-          if (app.db().groups().size() == 0) {                      // смотрим есть ли группа в бд и если нет, то создаем
+        if (contact.getGroups().size() == 0) {                                  // берем список контактов и смотрим есть ли контакт у которого нет группы
+          if (app.db().groups().size() == 0) {                                  // смотрим есть ли группа в бд и если нет, то создаем
             app.goTo().groupPage();
-            app.group().create(new GroupData().withName("test1"));
+            app.group().create(new GroupData().withName(String.format("test%s", now)));
           }
           idContact = contact.getId();
-        } else if (contact.getGroups().size() == app.db().groups().size()) {                                                    // если у контакта уже есть группа, то нужно создать новую
+        } else if (contact.getGroups().size() == app.db().groups().size()) {   // если у контакта уже есть группа, то нужно создать новую
           app.goTo().groupPage();
-          app.group().create(new GroupData().withName("test2"));
+          app.group().create(new GroupData().withName(String.format("test%s", now)));
         }
         idContact = contact.getId();
       }
-    } else {                                                        // иначе если не находится контакт без группы создаем новый контакт
+    } else {                                                                    // иначе если не находится контакт без группы создаем новый контакт
       app.goTo().goToNewContactPage();
       app.contact().create(new ContactData().withName("Александр").withSurname("Николаев")
               .withAddress("город Омск")
@@ -48,9 +53,9 @@ public class ContactAddInGroup extends TestBase {
       for (ContactData contact : contacts) {
         idContact = contact.getId();
       }
-      if (app.db().groups().size() == 0) {                          // смотрим есть ли группа в бд и если нет, то создаем
+      if (app.db().groups().size() == 0) {                                      // смотрим есть ли группа в бд и если нет, то создаем
         app.goTo().groupPage();
-        app.group().create(new GroupData().withName("test1"));
+        app.group().create(new GroupData().withName(String.format("test%s", now)));
       }
     }
 
@@ -74,7 +79,7 @@ public class ContactAddInGroup extends TestBase {
 //        }
 //        idContact = contact.getId();
 //      }
-//    } else if (app.db().contacts().size() == 0) {                                                                          // проверяем что есть контакт что бы добавить его в группу
+//    } else if (app.db().contacts().size() == 0) {                               // проверяем что есть контакт что бы добавить его в группу
 //      app.goTo().goToNewContactPage();
 //      app.contact().create(new ContactData().withName("Александр").withSurname("Николаев")
 //              .withAddress("город Омск")
@@ -88,26 +93,20 @@ public class ContactAddInGroup extends TestBase {
 
   @Test
   public void testAddContactToGroup() {
-    /* вариант 1. почему-то не получается добавлять в другую группу */
-//    ContactData contact = app.db().contacts().iterator().next();
-//    GroupData group = app.db().groups().iterator().next();
-//    app.goTo().goToHomePage();
-//    app.contact().addContactInGroup(contact, group);
-//    assertThat(new ArrayList<>(app.db().contacts()).contains(group), equalTo(false));
-//    verifyContactListInUi();
-
-    /* вариант 2. работает но выглядит кейс не хорошо */
     String nameGroup = null;
     app.goTo().goToHomePage();
-    app.contact().selectContactById(idContact);
-    int idGroup = app.db().idGroupWithoutContact(idContact);                                                        // получаем айди группы в которой контакт не состоит
-    List<GroupData> groups = new ArrayList<>(app.db().groups());
-    for (GroupData group : groups) {
-      nameGroup = group.getName();
+    ContactData contact = app.db().contacts().iterator().next();
+    Groups contactGroups = contact.getGroups();                                               // берем грпуппы в которых есть контакт
+    List<GroupData> groups = new ArrayList<>(app.db().groups());                              // берем все группы
+    for (GroupData group : groups) {                                                          // идем по всем группам и запоминаем имя той группы которой нет у контакта
+      if (!contactGroups.contains(group)) {
+        nameGroup = group.getName();
+      }
     }
-    app.contact().setGroupForContact(nameGroup);
-    app.contact().addInGroup();
-    assertThat(new ArrayList<>(app.db().contacts()).contains(idGroup), equalTo(false)); // при ыборке из бд групп, в которых не состоит наш контакт нет той, в которую он был добавлен
+    app.contact().addContactInGroup(contact, nameGroup);                                      // основные шаги добавления в группу
+    Groups contactGroupsAfter = app.db().contactsInGroup(contact.getId()).getGroups();
+    assertThat(contactGroups.size() + 1, equalTo(contactGroupsAfter.size()));           // сравниваем что количесвто групп у контакта равно изначальному + 1
+//    assertThat(app.db().contactsInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));   // сравниваем что список групп у контакта содержит ту группу в которую добавляли
     verifyContactListInUi();
   }
 }

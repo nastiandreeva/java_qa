@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
+import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,12 +98,12 @@ public class ContactHelper extends HelperBase{
     returnToContactPage();
   }
 
-//  public void addContactInGroup(ContactData contact, GroupData group){
-//    selectContactById(contact.getId());
-//    setGroupForContact(group);
-//    addInGroup();
-//    returnToContactPage();
-//  }
+  public void addContactInGroup(ContactData contact, String groupName){
+    selectContactById(contact.getId());
+    setGroupForContact(groupName);
+    addInGroup();
+    returnToContactPage();
+  }
 
 //  public void selectGroupForAdd(String nameGroup) {
 //    selectContactById(idContact);
