@@ -1,19 +1,15 @@
 package ru.stqa.auto.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
-import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactAddInGroup extends TestBase {
@@ -22,7 +18,9 @@ public class ContactAddInGroup extends TestBase {
    * 1. проверяем есть ли контакт, если нет то создаем новый контакт
    * 2. если контакт есть, проверяем есть ли у него группа
    * 3. если у контакта группы нет, то просто берем его айди
-   * 4. если у контакта группа есть, то создаем новую группу и берем айди контакта  */
+   * 4. если у контакта группа есть, то создаем новый контакт
+   * 5. прверяем есть ли группа, если есть и контакт не в ней, то берес айди группы и добавляем в нее
+   * 6. если группы нет, то создаем группу и берем ее айди  */
   int idContact;
 
   @BeforeMethod
@@ -106,7 +104,8 @@ public class ContactAddInGroup extends TestBase {
     app.contact().addContactInGroup(contact, nameGroup);                                      // основные шаги добавления в группу
     Groups contactGroupsAfter = app.db().contactsInGroup(contact.getId()).getGroups();
     assertThat(contactGroups.size() + 1, equalTo(contactGroupsAfter.size()));           // сравниваем что количесвто групп у контакта равно изначальному + 1
-//    assertThat(app.db().contactsInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));   // сравниваем что список групп у контакта содержит ту группу в которую добавляли
+    assertThat(app.db().contactsInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));   // сравниваем что список групп у контакта содержит ту группу в которую добавляли
+    //проверка на то, что сначала контакта не было в группе, а после теста он там появился TODO
     verifyContactListInUi();
   }
 }
