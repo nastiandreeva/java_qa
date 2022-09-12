@@ -48,11 +48,11 @@ public class ContactDeleteFromGroup extends TestBase {
       }
       idContact = contact.getId();
     }
-    ContactData contactInGroup = app.db().contactsInGroup(idContact);
+    ContactData contactInGroup = app.db().getContactInGroup(idContact);
     Groups groupDelete = contactInGroup.getGroups();
+    app.contact().returnToContactPage();
     app.contact().selectContactForDeleted(contactInGroup);
-    assertThat(app.db().contactsInGroup(contactInGroup.getId()).getGroups().contains(groupDelete), equalTo(false));// проверяем что у контакта нет группы
-
+    assertThat(app.db().getContactInGroup(contactInGroup.getId()).getGroups().contains(groupDelete), equalTo(false)); // проверяем что у контакта нет группы
     verifyContactListInUi();
   }
 }
