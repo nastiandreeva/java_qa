@@ -4,7 +4,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.GroupData;
-import ru.stqa.auto.addressbook.model.Groups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +58,15 @@ public class ContactAddInGroup extends TestBase {
 
   }
 
+  @Test
+  public void testAddContactToGroup() {
+    ContactData contact = app.db().contacts().iterator().next();
+    GroupData group = app.db().groups().iterator().next();
+    app.contact().contactInGroup(contact,group);
+    assertThat(app.db().getContactInGroup(contact.getId()).getGroups().contains(group), equalTo(true));
+    verifyContactListInUi();
+  }
+
 //  public void ensurePreconditions() {
 //    if (app.db().contacts().size() > 0) {
 //      List<ContactData> contacts = app.db().contacts().stream().collect(Collectors.toList());
@@ -89,23 +97,21 @@ public class ContactAddInGroup extends TestBase {
 //    }
 //  }
 
-  @Test
-  public void testAddContactToGroup() {
-    String nameGroup = null;
-    app.goTo().goToHomePage();
-    ContactData contact = app.db().contacts().iterator().next();
-    Groups contactGroups = contact.getGroups();                                               // берем грпуппы в которых есть контакт
-    List<GroupData> groups = new ArrayList<>(app.db().groups());                              // берем все группы
-    for (GroupData group : groups) {                                                          // идем по всем группам и запоминаем имя той группы которой нет у контакта
-      if (!contactGroups.contains(group)) {
-        nameGroup = group.getName();
-      }
-    }
-    app.contact().addContactInGroup(contact, nameGroup);                                      // основные шаги добавления в группу
-    Groups contactGroupsAfter = app.db().contactsInGroup(contact.getId()).getGroups();
-    assertThat(contactGroups.size() + 1, equalTo(contactGroupsAfter.size()));           // сравниваем что количесвто групп у контакта равно изначальному + 1
-    assertThat(app.db().contactsInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));   // сравниваем что список групп у контакта содержит ту группу в которую добавляли
-    //проверка на то, что сначала контакта не было в группе, а после теста он там появился TODO
-    verifyContactListInUi();
-  }
+
+//    String nameGroup = null;
+//    app.goTo().goToHomePage();
+//    ContactData contact = app.db().contacts().iterator().next();
+//    Groups contactGroups = contact.getGroups();                                               // берем грпуппы в которых есть контакт
+//    List<GroupData> groups = new ArrayList<>(app.db().groups());                              // берем все группы
+//    for (GroupData group : groups) {                                                          // идем по всем группам и запоминаем имя той группы которой нет у контакта
+//      if (!contactGroups.contains(group)) {
+//        nameGroup = group.getName();
+//      }
+//    }
+//    app.contact().addContactInGroup(contact, nameGroup);                                      // основные шаги добавления в группу
+//    Groups contactGroupsAfter = app.db().contactsInGroup(contact.getId()).getGroups();
+//    assertThat(contactGroups.size() + 1, equalTo(contactGroupsAfter.size()));           // сравниваем что количесвто групп у контакта равно изначальному + 1
+//    assertThat(app.db().contactsInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));   // сравниваем что список групп у контакта содержит ту группу в которую добавляли
+//    verifyContactListInUi();
+//  }
 }

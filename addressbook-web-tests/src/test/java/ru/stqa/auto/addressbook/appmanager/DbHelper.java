@@ -44,15 +44,20 @@ public class DbHelper extends TestBase {
     return new Contacts(result);
   }
 
-  public int idGroupWithoutContact(int id) {                                         // получаем список групп в которых нет передаваемого айди контакта
+  public GroupData idGroupWithoutContact(int id) {                                         // получаем список групп в которых нет передаваемого айди контакта
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     session.getTransaction().commit();
-    Query result = session.createQuery( "from GroupData where group_id != :id" );
+    Query result = session.createQuery( "from GroupData where group_name = :group_name" );
     result.setParameter("id", id);
-    List<GroupData> groupId = result.getResultList();
+    GroupData group = (GroupData) result.getSingleResult();
+    session.getTransaction().commit();
     session.close();
-    return groupId.get(0).getId();
+    return group;
+//    result.setParameter("group_name", group_name);
+//    List<GroupData> groupId = result.getResultList();
+//    session.close();
+//    return groupId.get(0).getId();
   }
 
   public ContactData contactsInGroup(int id) {                                             // получаем список контактов в группах через досутп к бд
@@ -64,5 +69,14 @@ public class DbHelper extends TestBase {
     ContactData contact = (ContactData) result.getSingleResult();
     session.close();
     return contact;
+  }
+
+  public ContactData getContactInGroup(int id) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    ContactData result = (ContactData) session.createQuery( "from ContactData where deprecated = '0000-00-00'" ).list().get(0);
+    session.getTransaction().commit();
+    session.close();
+    return result;
   }
 }

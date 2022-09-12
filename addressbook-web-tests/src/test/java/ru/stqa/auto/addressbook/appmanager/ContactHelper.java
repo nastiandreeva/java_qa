@@ -4,12 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.auto.addressbook.model.ContactData;
 import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -186,4 +185,16 @@ public class ContactHelper extends HelperBase{
             .withEmail1(email1).withEmail2(email2).withEmail3(email3);
   }
 
+  public void contactInGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    selectGroupForContact(contact,group);
+    addInGroup();
+  }
+
+  private void selectGroupForContact(ContactData contact,GroupData group) {
+    if(contact.getGroups().size() > 0)
+      Assert.assertTrue(contact.getGroups().size() == 1);
+    new Select(wd.findElement(By.name("to_group")))
+            .selectByVisibleText(group.getName());
+  }
 }
