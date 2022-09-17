@@ -3,9 +3,11 @@ package ru.stqa.auto.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.auto.addressbook.model.ContactData;
+import ru.stqa.auto.addressbook.model.Contacts;
 import ru.stqa.auto.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,6 +23,8 @@ public class ContactAddInGroup extends TestBase {
    * 5. прверяем есть ли группа, если есть и контакт не в ней, то берес айди группы и добавляем в нее
    * 6. если группы нет, то создаем группу и берем ее айди  */
   int idContact;
+  int idGroup;
+  String nameGroup;
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -38,8 +42,15 @@ public class ContactAddInGroup extends TestBase {
         } else if (contact.getGroups().size() == app.db().groups().size()) {   // если у контакта уже есть группа, то нужно создать новую
           app.goTo().groupPage();
           app.group().create(new GroupData().withName(String.format("test%s", now)));
+//        } else if (contact.getGroups().size() < app.db().groups().size()) {    // если у контакта количествво групп меньше чем есть в бд, то есть есть группа в которой нашего контакта нет
+//          List<Contacts> contactGroups = new ArrayList<Contacts>((Collection<? extends Contacts>) app.db().getGroupsFromContact());
+//          List<GroupData> allGroups = new ArrayList<GroupData>((Collection<? extends GroupData>) app.db().allGroups());
+//          allGroups.removeAll(contactGroups);
+//          System.out.println(allGroups.get(0).getId());
+//          nameGroup = allGroups.get(0).getName();                             //записываем в переменную айди группы которой нет у контакта из allGroups, подойдет и нулевой элемент по индексу
+//          idGroup = allGroups.get(0).getId();
         }
-        idContact = contact.getId();
+          idContact = contact.getId();
       }
     } else {                                                                    // иначе если не находится контакт без группы создаем новый контакт
       app.goTo().goToNewContactPage();
@@ -61,10 +72,17 @@ public class ContactAddInGroup extends TestBase {
   @Test
   public void testAddContactToGroup() {
     ContactData contact = app.db().contacts().iterator().next();
-    GroupData group = app.db().groups().iterator().next();
+    if (contact.getGroups().size() < app.db().groups().size()) {                // если у контакта количествво групп меньше чем есть в бд, то есть есть группа в которой нашего контакта нет
+      List<Contacts> contactGroups = new ArrayList<Contacts>((Collection<? extends Contacts>) app.db().getGroupsFromContact());
+      List<GroupData> allGroups = new ArrayList<GroupData>((Collection<? extends GroupData>) app.db().allGroups());
+      allGroups.removeAll(contactGroups);
+      System.out.println(allGroups.get(0).getId());
+      nameGroup = allGroups.get(0).getName();                                   //записываем в переменную айди группы которой нет у контакта из allGroups, подойдет и нулевой элемент по индексу
+      idGroup = allGroups.get(0).getId();
+    }
     app.contact().returnToContactPage();
-    app.contact().contactInGroup(contact,group);
-    assertThat(app.db().getContactInGroup(contact.getId()).getGroups().contains(group), equalTo(true));
+    app.contact().contactInGroup(contact, nameGroup);                            // передавать айди той группы в которой контакт не состоит
+    assertThat(app.db().getContactInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));
     verifyContactListInUi();
   }
 

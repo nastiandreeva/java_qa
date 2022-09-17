@@ -12,6 +12,7 @@ import ru.stqa.auto.addressbook.model.GroupData;
 import ru.stqa.auto.addressbook.model.Groups;
 import ru.stqa.auto.addressbook.tests.TestBase;
 
+import java.util.Collection;
 import java.util.List;
 
 public class DbHelper extends TestBase {
@@ -44,7 +45,7 @@ public class DbHelper extends TestBase {
     return new Contacts(result);
   }
 
-  public GroupData idGroupWithoutContact(int id) {                                         // получаем список групп в которых нет передаваемого айди контакта
+  public GroupData idGroupWithoutContact(int id) {                                      // получаем список групп в которых нет передаваемого айди контакта
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     session.getTransaction().commit();
@@ -54,13 +55,14 @@ public class DbHelper extends TestBase {
     session.getTransaction().commit();
     session.close();
     return group;
+
 //    result.setParameter("group_name", group_name);
 //    List<GroupData> groupId = result.getResultList();
 //    session.close();
 //    return groupId.get(0).getId();
   }
 
-  public ContactData contactsInGroup(int id) {                                             // получаем список контактов в группах через досутп к бд
+  public ContactData contactsInGroup(int id) {                                         // получаем список контактов в группах через досутп к бд
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     session.getTransaction().commit();
@@ -69,6 +71,29 @@ public class DbHelper extends TestBase {
     ContactData contact = (ContactData) result.getSingleResult();
     session.close();
     return contact;
+  }
+
+  public Collection<? extends Object> getGroupsFromContact() {                          // получаем список групп в которых есть контакт
+      Session session = sessionFactory.openSession();
+      session.beginTransaction();
+      List<ContactData> result = session.createQuery( "from ContactData where deprecated = '0000-00-00'" ).list();
+      session.getTransaction().commit();
+      session.close();
+      for ( ContactData contact : result ) {
+        System.out.println(contact);
+        System.out.println(contact.getGroups());
+        return contact.getGroups();
+      }
+    return result;
+  }
+
+  public Collection<? extends Object> allGroups() {                                     // получаем список групп через досутп к бд, а не через чтение с интерфейса
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<GroupData> result = session.createQuery("from GroupData").list();
+    session.getTransaction().commit();
+    session.close();
+    return result;
   }
 
   public ContactData getContactInGroup(int id) {
