@@ -185,16 +185,15 @@ public class ContactHelper extends HelperBase{
             .withEmail1(email1).withEmail2(email2).withEmail3(email3);
   }
 
-  public void contactInGroup(ContactData contact, String group) {
+  public void contactInGroup(ContactData contact, GroupData group) {
     selectContactById(contact.getId());
-//    setGroupForContact(group.getName());
-    selectGroupForAddContact(group);
+    selectGroupForAddContact(group.getName());
     addInGroup();
   }
 
-  private void selectGroupForAddContact(String group) {
+  private void selectGroupForAddContact(String groupName) {
     new Select(wd.findElement(By.name("to_group")))
-            .selectByVisibleText(group);
+            .selectByVisibleText(String.valueOf(groupName));
   }
 
   private void selectGroupForContact(ContactData contact,GroupData group) {

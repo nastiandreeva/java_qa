@@ -77,12 +77,13 @@ public class ContactAddInGroup extends TestBase {
       List<GroupData> allGroups = new ArrayList<GroupData>((Collection<? extends GroupData>) app.db().allGroups());
       allGroups.removeAll(contactGroups);
       System.out.println(allGroups.get(0).getId());
-      nameGroup = allGroups.get(0).getName();                                   //записываем в переменную айди группы которой нет у контакта из allGroups, подойдет и нулевой элемент по индексу
-      idGroup = allGroups.get(0).getId();
+      nameGroup = allGroups.get(0).getName();
+      idGroup = allGroups.get(0).getId();                                      //записываем в переменную айди группы которой нет у контакта из allGroups, подойдет и нулевой элемент по индексу
     }
     app.contact().returnToContactPage();
-    app.contact().contactInGroup(contact, nameGroup);                            // передавать айди той группы в которой контакт не состоит
-    assertThat(app.db().getContactInGroup(contact.getId()).getGroups().contains(nameGroup), equalTo(true));
+    GroupData newGroupFromContact = app.db().newGroupContact(idGroup);
+    app.contact().contactInGroup(contact, newGroupFromContact);                            // передавать айди той группы в которой контакт не состоит
+    assertThat(app.db().getContactInGroup(contact.getId()).getGroups().contains(newGroupFromContact), equalTo(true));
     verifyContactListInUi();
   }
 

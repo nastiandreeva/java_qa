@@ -104,4 +104,14 @@ public class DbHelper extends TestBase {
     session.close();
     return result;
   }
+
+  public GroupData newGroupContact(int id)  {                                                              // получаем список групп через досутп к бд, а не через чтение с интерфейса
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    Query result = session.createQuery( "from GroupData where id = :id" );
+    result.setParameter("id", id);
+    GroupData group = (GroupData ) result.getSingleResult();
+    session.close();
+    return group;
+  }
 }
