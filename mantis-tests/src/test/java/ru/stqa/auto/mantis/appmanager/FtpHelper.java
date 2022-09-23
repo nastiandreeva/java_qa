@@ -2,9 +2,8 @@ package ru.stqa.auto.mantis.appmanager;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class FtpHelper {
 
@@ -19,6 +18,12 @@ public class FtpHelper {
   public void upload(File file, String target, String backup) throws IOException {   // загружается новый файл, а старый временно переименовывается (локальный файл, имя файла, имя резервной копии)
     ftp.connect(app.getProperty("ftp.host"));
     ftp.login(app.getProperty("ftp.login"), app.getProperty("ftp.password"));
+
+    System.out.println(file);
+    System.out.println(target);
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    System.out.println(br.read());
+
     ftp.deleteFile(backup);                                                          // удаляем файл
     ftp.rename(target, backup);                                                      // переименовываем
     ftp.enterLocalPassiveMode();
