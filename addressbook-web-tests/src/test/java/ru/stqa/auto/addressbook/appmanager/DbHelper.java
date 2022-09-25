@@ -45,6 +45,15 @@ public class DbHelper extends TestBase {
     return new Contacts(result);
   }
 
+  public int randomContact() {                                                          // получаем список контактов через досутп к бд, а не через чтение с интерфейса
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    ContactData result  = (ContactData) session.createQuery( "from ContactData").list().get(0);   // запрос к объекту, вместо запроса sql
+    session.getTransaction().commit();
+    session.close();
+    return result.getId();
+  }
+
   public ContactData getContactWithoutGroup(int id) {                                   // получаем один контакт по айди
     Session session = sessionFactory.openSession();
     session.beginTransaction();
