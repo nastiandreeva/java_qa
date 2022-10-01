@@ -25,7 +25,7 @@ public class RegistrationTests extends TestBase {
     long now = System.currentTimeMillis();                                                              // для уникальности timestamp
     String user = String.format("user%s", now);
     String password = "password";
-    String email = String.format("mail%s@localhost.localdomain", now);
+    String email = String.format("user%s@localhost.localdomain", now);
     app.james().createUser(user, password);
     app.registration().start(user, email);
 //    List<MailMessage> mailMessages = app.mail().waitForMail(2, 1000);
