@@ -11,9 +11,15 @@ dependencies {  //библиотеки
     implementation 'junit:junit:4.12'
     implementation 'org.hamcrest:java-hamcrest:2.0.0.0'                 // библиотека для сравнения двух строк, «matcher»-ом является equalTo(), функция же assertThat()
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'        // библиотека для работы через запросы http
+    implementation 'com.thoughtworks.xstream:xstream:1.4.19'            // библиотека для сериализации/десериализации xml
+    implementation 'com.google.code.gson:gson:2.9.0'                    // библиотека для сериализации/десериализации json
+    implementation 'org.hibernate:hibernate-core:5.6.8.Final'           // библиотека для работы с orm
+    implementation 'mysql:mysql-connector-java:8.0.28'                  // библиотека для работы с mysql
     implementation 'commons-net:commons-net:3.8.0'                      // библиотека для работы с ftp файлами
     implementation 'org.subethamail:subethasmtp:3.1.7'                  // библиотека для отправки писем на эмейл
-    implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.8'  // библиотека для поиска в тексте ссылки
+    implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.8'
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'// библиотека для поиска в тексте ссылки
 }
 
 task testContacts(type: Test) {

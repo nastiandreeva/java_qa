@@ -23,6 +23,7 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
   private ChangeUserPasswordHelper changeUserPasswordHelper;
+  private DbHelper dbHeper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -89,6 +90,9 @@ public class ApplicationManager {
       jamesHelper = new JamesHelper(this);
     }
     return jamesHelper;
+  }
+  public DbHelper db(){
+    return dbHeper;
   }
 
   public ChangeUserPasswordHelper changePassword() {

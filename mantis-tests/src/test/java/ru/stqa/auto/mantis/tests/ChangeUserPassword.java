@@ -5,6 +5,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.auto.mantis.model.MailMessage;
+import ru.stqa.auto.mantis.model.UserData;
+import ru.stqa.auto.mantis.model.Users;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -22,24 +24,31 @@ public class ChangeUserPassword extends TestBase {
   @Test
   public void testChangePassword() throws IOException, MessagingException, InterruptedException {
     long now = System.currentTimeMillis();                                                              // для уникальности timestamp
-    String user = String.format("user%s", now);
+    String userName= String.format("user%s", now);
     String password1 = "password";
     String password2 = "newpassword";
     String email = String.format("mail%s@localhost.localdomain", now);
 
-    app.changePassword().start(user, email);                                                            // регистрируем пользователя у которого будем сбрасывать пароль
+    Users users = app.db().getUsersWithoutAdmin();                                                      // получаем данные из бд и смотрим есть ли юзеры кроме админа
+    if (users.size() > 0) {
+      UserData user = users.iterator().next();
+      userName = user.getName();
+    } else if (users.size() == 0) {
+      app.changePassword().start(userName, email);                                                      // регистрируем пользователя у которого будем сбрасывать пароль
+    }
+
     List<MailMessage> mailMessages1 = app.mail().waitForMail(2, 1000);
     String confirmationLink1 = findConfirmationLink(mailMessages1, email);
     app.changePassword().finish(confirmationLink1, password1);
 
-    app.changePassword().login("administrator", "root");                                  // администратор входит в систему
+    app.changePassword().login(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));// администратор входит в систему под логином и паролем из конфига
     Thread.sleep(1000);
-    app.changePassword().goToManageUsers(user);                                                         // переход на страницу управления пользователями и сброс пароля
+    app.changePassword().goToManageUsers(userName);                                                         // переход на страницу управления пользователями и сброс пароля
     Thread.sleep(1000);
     List<MailMessage> mailMessages2 = app.mail().waitForMail(2, 1000);                     // переходим в почту пользователя
     String confirmationLink2 = findConfirmationLink2(mailMessages2, email);                             // переходим по ссылке из письма
     app.changePassword().finish(confirmationLink2, password2);
-    assertTrue(app.newSession().login(user, password2));
+    assertTrue(app.newSession().login(userName, password2));
   }
 
   private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
