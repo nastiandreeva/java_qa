@@ -24,6 +24,7 @@ public class ApplicationManager {
   private JamesHelper jamesHelper;
   private ChangeUserPasswordHelper changeUserPasswordHelper;
   private DbHelper dbHeper;
+  private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -39,6 +40,7 @@ public class ApplicationManager {
     if (wd != null ) {
       wd.quit();
     }
+
   }
 
   public HttpSession newSession() {           // метод инициализации помощника при каждом обращении, для открытия нескольких сессий, например пользователя и администратора
@@ -100,5 +102,12 @@ public class ApplicationManager {
       changeUserPasswordHelper = new ChangeUserPasswordHelper(this);
     }
     return  changeUserPasswordHelper;
+  }
+
+  public SoapHelper soap() {
+    if (soapHelper == null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
   }
 }
