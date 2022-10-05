@@ -7,10 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.stqa.auto.mantis.model.UserData;
 import ru.stqa.auto.mantis.model.Users;
+import ru.stqa.auto.mantis.tests.TestBase;
+
 import java.util.List;
 
 
-public class DbHelper {
+public class DbHelper extends TestBase {
 
   private final SessionFactory sessionFactory;
 

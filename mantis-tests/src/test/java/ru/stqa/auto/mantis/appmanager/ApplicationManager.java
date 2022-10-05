@@ -23,7 +23,7 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
   private ChangeUserPasswordHelper changeUserPasswordHelper;
-  private DbHelper dbHeper;
+  private DbHelper dbHelper;
   private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) {
@@ -94,7 +94,7 @@ public class ApplicationManager {
     return jamesHelper;
   }
   public DbHelper db(){
-    return dbHeper;
+    return dbHelper;
   }
 
   public ChangeUserPasswordHelper changePassword() {
