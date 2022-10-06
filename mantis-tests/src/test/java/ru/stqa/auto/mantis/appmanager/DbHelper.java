@@ -12,11 +12,13 @@ import ru.stqa.auto.mantis.tests.TestBase;
 import java.util.List;
 
 
-public class DbHelper extends TestBase {
+public class DbHelper {
 
   private final SessionFactory sessionFactory;
+  private ApplicationManager app;
 
-  public DbHelper() {
+  public DbHelper (ApplicationManager app){
+    this.app = app;
     final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure()
             .build();

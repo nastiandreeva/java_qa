@@ -1,5 +1,6 @@
 package ru.stqa.auto.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
 import biz.futureware.mantis.rpc.soap.client.MantisConnectLocator;
 import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import biz.futureware.mantis.rpc.soap.client.ProjectData;
@@ -35,4 +36,14 @@ public class SoapTests extends TestBase{
     assertEquals(issue.getSummary(), created.getSummary());
   }
 
+  @Test
+  public void testShipIfBug() throws RemoteException, ServiceException, MalformedURLException {
+    IssueData issue = app.soap().getIssue();                        // получаем статус конкретного бага
+    if (issue.getStatus().equals(90)) {
+      skipIfNotFixed(3);
+    }
+    Issue newIssue = new Issue().withSummary("Bug").withDescription("Test for skip");
+    Issue created = app.soap().addIssue(newIssue);
+    assertEquals(newIssue.getSummary(), created.getSummary());
+  }
 }

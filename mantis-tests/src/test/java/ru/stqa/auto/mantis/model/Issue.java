@@ -1,11 +1,16 @@
 package ru.stqa.auto.mantis.model;
 
+import biz.futureware.mantis.rpc.soap.client.ObjectRef;
+
+import java.math.BigInteger;
+
 public class Issue {
 
   private int id;
   private String summary;
   private String description;
   private Project project;
+  private BigInteger status;
 
   public String getSummary() {
     return summary;
@@ -40,6 +45,15 @@ public class Issue {
 
   public Issue withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public BigInteger getStatus() {
+    return status;
+  }
+
+  public Issue withStatus(ObjectRef status) {
+    this.status = status.getId();
     return this;
   }
 
