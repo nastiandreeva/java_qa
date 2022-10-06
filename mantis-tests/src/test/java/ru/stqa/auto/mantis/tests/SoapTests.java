@@ -37,9 +37,9 @@ public class SoapTests extends TestBase{
   }
 
   @Test
-  public void testShipIfBug() throws RemoteException, ServiceException, MalformedURLException {
+  public void testSkipIfBug() throws RemoteException, ServiceException, MalformedURLException {
     IssueData issue = app.soap().getIssue();                        // получаем статус конкретного бага
-    if (issue.getStatus().equals(90)) {
+    if (!issue.getStatus().equals(90)) {
       skipIfNotFixed(3);
     }
     Issue newIssue = new Issue().withSummary("Bug").withDescription("Test for skip");
