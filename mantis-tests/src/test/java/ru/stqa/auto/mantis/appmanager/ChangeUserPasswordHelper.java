@@ -1,6 +1,7 @@
 package ru.stqa.auto.mantis.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 public class ChangeUserPasswordHelper extends HelperBase {
 
@@ -27,8 +28,11 @@ public class ChangeUserPasswordHelper extends HelperBase {
 
   public void goToManageUsers(String user) throws InterruptedException {
     click(By.id("menu-toggler"));
-    click(By.xpath("//*[@id=\"sidebar\"]/ul/li[6]/a"));
+    Thread.sleep(1000);
+    click(By.xpath("//*[@id=\"sidebar\"]/ul/li[7]/a"));
+    Thread.sleep(1000);
     click(By.xpath("//*[@id=\"main-container\"]/div[2]/div[2]/div/ul/li[2]/a"));            // выбрали ранее созданного пользователя и провалились в него TODO лучше бы брать по регулярке по тексту в теге <a>
+    Thread.sleep(1000);
     click(By.linkText(user));
     Thread.sleep(1000);
     click(By.xpath("//*[@id=\"manage-user-reset-form\"]/fieldset/span/input"));             // сбросили ему пароль

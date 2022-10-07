@@ -1,5 +1,7 @@
 package ru.stqa.auto.mantis.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 
@@ -12,9 +14,11 @@ import javax.persistence.*;
     @Column(name = "id")
     private Integer id;
 
+    @Expose
     @Column(name = "username")
     private String name;
 
+    @Expose
     @Column(name = "email")
     private String email;
 

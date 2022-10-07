@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 import ru.stqa.auto.mantis.model.UserData;
 import ru.stqa.auto.mantis.model.Users;
 import ru.stqa.auto.mantis.tests.TestBase;

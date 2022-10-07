@@ -17,19 +17,19 @@ public class RegistrationTests extends TestBase {
 
   @BeforeMethod
   public void startMailServer() {
-//    app.mail().start();
+    app.mail().start();                                                                                   // комментируется при запуске теста через james
   }
 
   @Test
   public void testRegistration() throws IOException, MessagingException {
-    long now = System.currentTimeMillis();                                                              // для уникальности timestamp
+    long now = System.currentTimeMillis();                                                                // для уникальности timestamp
     String user = String.format("user%s", now);
     String password = "password";
     String email = String.format("user%s@localhost.localdomain", now);
     app.james().createUser(user, password);
     app.registration().start(user, email);
-//    List<MailMessage> mailMessages = app.mail().waitForMail(2, 1000);
-    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 6000);               // нужно запустить run.bat для внешнего сервера
+    List<MailMessage> mailMessages = app.mail().waitForMail(2, 1000);
+//    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 6000);                     // нужно запустить run.bat для внешнего сервера
     String confirmationLink = findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
     assertTrue(app.newSession().login(user, password));
@@ -43,6 +43,6 @@ public class RegistrationTests extends TestBase {
 
   @AfterMethod (alwaysRun = true)
   public void stopMailServer() {
-//    app.mail().stop();
+    app.mail().stop();                                                                                    // комментируется при запуске теста через james
   }
 }

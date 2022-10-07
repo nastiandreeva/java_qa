@@ -29,21 +29,23 @@ public class ChangeUserPassword extends TestBase {
     String password2 = "newpassword";
     String email = String.format("mail%s@localhost.localdomain", now);
 
+//    List<MailMessage> mailMessages1 = app.mail().waitForMail(2, 1000);
+//    String confirmationLink1 = findConfirmationLink(mailMessages1, email);
+//    app.changePassword().finish(confirmationLink1, password1);
+
+    app.changePassword().login(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));// администратор входит в систему под логином и паролем из конфига
+    Thread.sleep(1000);
+
     Users users = app.db().getUsersWithoutAdmin();                                                      // получаем данные из бд и смотрим есть ли юзеры кроме админа
     if (users.size() > 0) {
       UserData user = users.iterator().next();
       userName = user.getName();
+      email = user.getEmail();
     } else if (users.size() == 0) {
       app.changePassword().start(userName, email);                                                      // регистрируем пользователя у которого будем сбрасывать пароль
     }
 
-    List<MailMessage> mailMessages1 = app.mail().waitForMail(2, 1000);
-    String confirmationLink1 = findConfirmationLink(mailMessages1, email);
-    app.changePassword().finish(confirmationLink1, password1);
-
-    app.changePassword().login(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));// администратор входит в систему под логином и паролем из конфига
-    Thread.sleep(1000);
-    app.changePassword().goToManageUsers(userName);                                                         // переход на страницу управления пользователями и сброс пароля
+    app.changePassword().goToManageUsers(userName);                                                     // переход на страницу управления пользователями и сброс пароля
     Thread.sleep(1000);
     List<MailMessage> mailMessages2 = app.mail().waitForMail(2, 1000);                     // переходим в почту пользователя
     String confirmationLink2 = findConfirmationLink2(mailMessages2, email);                             // переходим по ссылке из письма
