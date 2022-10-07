@@ -47,7 +47,7 @@ public class ChangeUserPassword extends TestBase {
 
     app.changePassword().goToManageUsers(userName);                                                     // переход на страницу управления пользователями и сброс пароля
     Thread.sleep(1000);
-    List<MailMessage> mailMessages2 = app.mail().waitForMail(2, 1000);                     // переходим в почту пользователя
+    List<MailMessage> mailMessages2 = app.mail().waitForMail(1, 1000);                     // переходим в почту пользователя
     String confirmationLink2 = findConfirmationLink2(mailMessages2, email);                             // переходим по ссылке из письма
     app.changePassword().finish(confirmationLink2, password2);
     assertTrue(app.newSession().login(userName, password2));
@@ -60,7 +60,7 @@ public class ChangeUserPassword extends TestBase {
   }
 
   private String findConfirmationLink2(List<MailMessage> mailMessages, String email) {
-    MailMessage mailMessage = mailMessages.get(2);                                                        // берем письмо по индексу на изменение пароля, TODO лучше бы надо брать по тексту "Your password has been reset. Please visit the following URL to set a new one:"
+    MailMessage mailMessage = mailMessages.get(0);                                                        // берем письмо по индексу на изменение пароля, TODO лучше бы надо брать по тексту "Your password has been reset. Please visit the following URL to set a new one:"
     VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();     // ищем текст ссылки
     return regex.getText(mailMessage.text);
   }
