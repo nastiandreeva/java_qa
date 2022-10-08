@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+repositories {  //подключение места откуда будет тянутся библиотека
+    mavenCentral()
+}
+
+dependencies {  //библиотеки
+    implementation 'org.testng:testng:7.5'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'        // http подключаем отдельно так как теперь работаем не через selenium
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.13'         // работа с http через fluent интерфейс
+}
