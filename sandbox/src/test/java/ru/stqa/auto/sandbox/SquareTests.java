@@ -8,7 +8,7 @@ public class SquareTests {
   @Test //аннотация
   public void testAreaSquare1() {
     Square s = new Square(5);
-    Assert.assertEquals(s.area(), 20.0); //вспомогательная функция для подробного описания ошибки
+    Assert.assertEquals(s.area(), 25.0); //вспомогательная функция для подробного описания ошибки
   }
 
   @Test
