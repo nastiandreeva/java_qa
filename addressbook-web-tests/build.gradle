@@ -22,13 +22,13 @@ task testContacts(type: Test) {
         suites 'src/test/resources/testng-contacts.xml'
     }
     if (project.hasProperty('browser')) {
-        System.getProperty('browser', "${browser}")
+        systemProperty('browser', "${browser}")
     }
     if (project.hasProperty('target')) {
-        System.getProperty('target', "${target}")
+        systemProperty('target', "${target}")
     }
     if (project.hasProperty('verifyUi')) {
-        System.getProperty('verifyUi', "${target}")
+        systemProperty('verifyUi', "${verifyUi}")
     }
 }
 
@@ -37,16 +37,16 @@ task testGroups(type: Test) {
         suites 'src/test/resources/testng-groups.xml'
     }
     if (project.hasProperty('browser')) {
-        System.getProperty('browser', "${browser}")
+        systemProperty('browser', "${browser}")
     }
 //    if (project.hasProperty('platform')) {
-//        System.getProperty('platform', "${platform}")
+//        systemProperty('platform', "${platform}")
 //    }
     if (project.hasProperty('target')) {
-        System.getProperty('target', "${target}")
+        systemProperty('target', "${target}")
     }
     if (project.hasProperty('verifyUi')) {
-        System.getProperty('verifyUi', "${target}")
+        systemProperty('verifyUi', "${verifyUi}")
     }
 }
 
