@@ -15,6 +15,7 @@ import ru.stqa.auto.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -33,7 +34,7 @@ public class TestBase {
   }
 
   @AfterSuite(alwaysRun = true)
-  public void tearDown() {
+  public void tearDown() throws Exception {
     app.stop();
   }
 
