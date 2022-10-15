@@ -1,7 +1,7 @@
 <!-- конфиурационный файл для описания выполнения кейсов -->
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Suite1" verbose="1" >
+<suite name="Suite1" verbose="1" > <!-- parallel="classes" устанавливается для параллельного выполнения тестов-->
     <test name="Groups" >
         <classes>
             <class name="ru.stqa.auto.addressbook.tests.GroupCreationTests" />

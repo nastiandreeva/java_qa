@@ -39,6 +39,9 @@ task testGroups(type: Test) {
     if (project.hasProperty('browser')) {
         System.getProperty('browser', "${browser}")
     }
+    if (project.hasProperty('platform')) {
+        System.getProperty('platform', "${platform}")
+    }
     if (project.hasProperty('target')) {
         System.getProperty('target', "${target}")
     }
