@@ -6,11 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +29,7 @@ public class ApplicationManager {
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;                                //в этом классе находятся все вспомогательные действия
   private String browser;
-  private DbHelper dbHeper;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -38,16 +40,13 @@ public class ApplicationManager {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-    dbHeper = new DbHelper();                                     // проверяется соединение с бд до того как начали запускать браузеры
+    dbHelper = new DbHelper();                                     // проверяется соединение с бд до того как начали запускать браузеры
     if ("".equals(properties.getProperty("selenium.server"))) {   // проверяем где запускаем тесты, если пусто то в браузере локально, иначе selenium.server для jenkins
-      //noinspection deprecation
       if (browser.equals(BrowserType.CHROME)) {
         wd = new ChromeDriver();
-      } else //noinspection deprecation
-        if (browser.equals(BrowserType.FIREFOX)) {
+      } else if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver();
-      } else //noinspection deprecation
-          if (browser.equals(BrowserType.IE)) {
+      } else if (browser.equals(BrowserType.IE)) {
         wd = new InternetExplorerDriver();
       }
     } else {
@@ -103,6 +102,6 @@ public class ApplicationManager {
   }
 
   public DbHelper db(){
-    return dbHeper;
+    return dbHelper;
   }
 }

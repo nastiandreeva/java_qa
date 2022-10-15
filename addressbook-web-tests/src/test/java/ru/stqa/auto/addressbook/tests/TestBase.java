@@ -24,7 +24,6 @@ public class TestBase {
 
   Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
 
-  @SuppressWarnings("deprecation")
   protected static final ApplicationManager app                                                 //создали делегирование вместо наследования
           = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));      // создаем переменную для указания браузера в конфигурационных настройках, иначе если не указан запускаем в хроме
 
