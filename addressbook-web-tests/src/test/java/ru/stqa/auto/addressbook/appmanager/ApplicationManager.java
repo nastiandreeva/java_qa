@@ -2,18 +2,15 @@ package ru.stqa.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -43,17 +40,20 @@ public class ApplicationManager {
 
     dbHeper = new DbHelper();                                     // проверяется соединение с бд до того как начали запускать браузеры
     if ("".equals(properties.getProperty("selenium.server"))) {   // проверяем где запускаем тесты, если пусто то в браузере локально, иначе selenium.server для jenkins
+      //noinspection deprecation
       if (browser.equals(BrowserType.CHROME)) {
         wd = new ChromeDriver();
-      } else if (browser.equals(BrowserType.FIREFOX)) {
+      } else //noinspection deprecation
+        if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver();
-      } else if (browser.equals(BrowserType.IE)) {
+      } else //noinspection deprecation
+          if (browser.equals(BrowserType.IE)) {
         wd = new InternetExplorerDriver();
       }
     } else {
       DesiredCapabilities capabilities = new DesiredCapabilities();                                       // для утановки параметров в jenkins
       capabilities.setBrowserName(browser);
-      capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
+//      capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
       wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
     }
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
