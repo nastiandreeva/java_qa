@@ -1,12 +1,8 @@
 package ru.stqa.auto.addressbook.tests;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -19,7 +15,6 @@ import ru.stqa.auto.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -29,6 +24,7 @@ public class TestBase {
 
   Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
 
+  @SuppressWarnings("deprecation")
   protected static final ApplicationManager app                                                 //создали делегирование вместо наследования
           = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));      // создаем переменную для указания браузера в конфигурационных настройках, иначе если не указан запускаем в хроме
 
@@ -38,7 +34,7 @@ public class TestBase {
   }
 
   @AfterSuite(alwaysRun = true)
-  public void tearDown() throws Exception {
+  public void tearDown() {
     app.stop();
   }
 
